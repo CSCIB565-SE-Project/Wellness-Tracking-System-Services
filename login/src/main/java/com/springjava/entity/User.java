@@ -31,6 +31,8 @@ public class User {
     private String gender;
     @Column(nullable = false, unique = true)
     private String username;
+    @Column(nullable = false, unique = true)
+    private String email;
     @Column(nullable = false)
     private String password;
     @ManyToMany(fetch = FetchType.EAGER)
@@ -59,6 +61,13 @@ public class User {
 
     public String getMname(){
         return mname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setLname(String lname){
@@ -99,6 +108,13 @@ public class User {
 
     public String getPassword(){
         return password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public String getFnameById(Integer id){

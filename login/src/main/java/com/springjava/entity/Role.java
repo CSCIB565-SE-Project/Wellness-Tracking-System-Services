@@ -33,4 +33,5 @@ public class Role {
     public void setRole(String roleName){
         this.roleName = roleName;
     }
+
 }
