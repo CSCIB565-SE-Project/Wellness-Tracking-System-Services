@@ -18,8 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -37,7 +36,7 @@ public class HomeController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @PostMapping("/login")
+    @PostMapping(path = "/login")
     public ResponseEntity<String> authenticateUser(@RequestBody LoginDto loginDto){
         Authentication authentication = authenticationManager.authenticate(new
                                         UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
@@ -45,8 +44,9 @@ public class HomeController {
         return new ResponseEntity<>("User login succesfully!...", HttpStatus.OK);
     }
 
-    @PostMapping("/signup")
+    @PostMapping(path = "/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto){
+        System.out.println("in /signup");
         if(userRepository.existsByUsername(signUpDto.getUsername())){
             return new ResponseEntity<>("Username already exists!!", HttpStatus.BAD_REQUEST);
         }
@@ -70,6 +70,10 @@ public class HomeController {
         return new ResponseEntity<>("Registered Succesfully!!", HttpStatus.OK);
     }
 
+    @GetMapping(path = "/test")
+    public String postmanMap(){
+        return "Test OK";
+    }
     
     
 }

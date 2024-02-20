@@ -1,7 +1,6 @@
 package com.springjava.service;
 
 import java.util.Collections;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,10 +16,10 @@ import com.springjava.repository.UserRepository;
 @Service
 public class UserDetail implements UserDetailsService{
     @Autowired
-    UserRepository userRepo;
+    private UserRepository userRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepo.findByUserNameOrEmail(username, username);
+        User user = userRepository.findByUserNameOrEmail(username, username);
         if(user == null){
             throw new UsernameNotFoundException("Username do not exists!!");
         }
