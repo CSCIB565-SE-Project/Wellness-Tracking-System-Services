@@ -1,4 +1,4 @@
-package loginservice.login;
+package com.loginseervice.login;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
