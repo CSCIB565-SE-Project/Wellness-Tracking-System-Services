@@ -2,9 +2,10 @@ server:
     port: 9191
 spring:
     datasource:
-        url: jdbc:mysql://localhost:3306/fitinc1
+        # url: jdbc:mysql://localhost:3306/fitinc1
+        url: jdbc:mysql://34.31.134.177/fitinc
         username: root
-        password: superuser
+        password: 136Mm136
         driver-class-name: com.mysql.cj.jdbc.Driver
     jpa:
         hibernate:
