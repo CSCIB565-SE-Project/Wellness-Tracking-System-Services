@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.loginseervice.login.exception.UserAlreadyExistsException;
+import com.loginseervice.login.registration.LoginRequest;
 import com.loginseervice.login.registration.RegistrationRequest;
 import com.loginseervice.login.registration.token.VerificationToken;
 import com.loginseervice.login.registration.token.VerificationTokenRepository;
@@ -43,10 +44,17 @@ public class UserService implements IUserService{
         newUser.setRole(request.role());
         return userRepository.save(newUser);
     }
-
+    
     @Override
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public String getPasswordEmail(Optional<User> user){
+        User usr = user.get();
+        String password = usr.getPassword();
+        return password;
     }
 
     @Override
@@ -72,6 +80,39 @@ public class UserService implements IUserService{
         return "valid";
     }
 
-    
-    
+    @Override
+    public LoginResponse loginUser(LoginRequest request) {
+        String statusMessage = "";
+        User usr = null;
+        Boolean status = false;
+        Optional<User> user = this.findByEmail(request.email());
+        if(user != null){
+            if(user.get().isEnabled()){
+                String password = request.password();
+                String encodedPassword = this.getPasswordEmail(user);
+                Boolean isPwdMatch = passwordEncoder.matches(password, encodedPassword);
+                if(isPwdMatch){
+                    Optional<User> tempUser = userRepository.findOneByEmailAndPassword(request.email(), encodedPassword);
+                    if(tempUser.isPresent()){
+                        statusMessage = "Login Success";
+                        usr = tempUser.get();
+                        status = true;
+                    }
+                    else{
+                        statusMessage = "Login Failed";
+                    }
+                }
+                else{
+                    statusMessage = "Password Mismatch";
+                }
+            }
+            else{
+                statusMessage = "User yet to be verified!";
+            }
+        }
+        else{
+            statusMessage = "User does not exist";
+        }
+        return new LoginResponse(statusMessage, status, usr);
+    }    
 }

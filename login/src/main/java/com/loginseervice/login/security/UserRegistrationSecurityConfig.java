@@ -22,7 +22,9 @@ public class UserRegistrationSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http.cors(Customizer.withDefaults()).csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(requests -> requests.requestMatchers("/register/**").permitAll())
+                .authorizeHttpRequests(requests -> requests.requestMatchers("/login/**").permitAll())
                 .authorizeHttpRequests(requests -> requests.requestMatchers("/users/**")
-                .hasAnyAuthority("USER", "ADMIN")).formLogin(Customizer.withDefaults()).build();
+                .hasAnyAuthority("USER", "ADMIN")).build();
+                //formLogin(Customizer.withDefaults()).build();
     }
 }
