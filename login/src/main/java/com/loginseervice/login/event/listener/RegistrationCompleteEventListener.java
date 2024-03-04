@@ -41,7 +41,7 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
     public void sendVerificationEmail(String url) throws UnsupportedEncodingException, MessagingException{
         String subject = "Email Verification";
         String senderName = "FitInc User Registration";
-        String body = "<p>Hi, "+ user.getFname() + ", </p>" + 
+        String body = "<p>Hi, "+ user.getFname() + ", </p>" +
                 "<p> Thank you for registering with us, " +
                 "Please, follow the link below to complete your registration.</p>" +
                 "<a href=\"" + url + "\">Verify your email to activate your account</a>" +
