@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,18 +16,6 @@ import com.loginseervice.login.user.LoginResponse;
 import com.loginseervice.login.user.UserService;
 
 import lombok.RequiredArgsConstructor;
-<<<<<<< HEAD
-=======
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-// import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
-
-
->>>>>>> cad5c1d393c890c856095c372753e0510b630889
 
 @RestController
 @RequiredArgsConstructor
