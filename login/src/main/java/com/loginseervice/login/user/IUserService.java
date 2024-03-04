@@ -14,4 +14,6 @@ public interface IUserService {
     void saveUserVerificationToken(User user, String verificationToken);
     String validateToken(String token);
     LoginResponse loginUser(LoginRequest request);
+    void createPasswordResetTokenForUser(String email, String appUrl);
+    void sendPasswordResetEmail(User user, String appUrl, String token);
 }

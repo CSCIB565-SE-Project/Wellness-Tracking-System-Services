@@ -15,10 +15,24 @@ import com.loginseervice.login.user.LoginResponse;
 import com.loginseervice.login.user.UserService;
 
 import lombok.RequiredArgsConstructor;
+<<<<<<< HEAD
+=======
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+// import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+
+
+>>>>>>> cad5c1d393c890c856095c372753e0510b630889
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/login")
+//so frontend can access in local testing
+@CrossOrigin(origins = "http://localhost:3000")
 public class LoginController {
     
     private final UserService userService;

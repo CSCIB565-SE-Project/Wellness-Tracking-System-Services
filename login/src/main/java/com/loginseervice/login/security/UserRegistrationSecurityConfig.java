@@ -23,7 +23,9 @@ public class UserRegistrationSecurityConfig {
         return http.cors(Customizer.withDefaults()).csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(requests -> requests.requestMatchers("/register/**").permitAll())
                 .authorizeHttpRequests(requests -> requests.requestMatchers("/login/**").permitAll())
+                .authorizeHttpRequests(requests -> requests.requestMatchers("/password-reset/**").permitAll())
                 .authorizeHttpRequests(requests -> requests.requestMatchers("/users/**")
+                
                 .hasAnyAuthority("USER", "ADMIN")).build();
                 //formLogin(Customizer.withDefaults()).build();
     }
