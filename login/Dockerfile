@@ -1,6 +1,12 @@
+FROM maven:3.8.5 AS builder
+WORKDIR /build
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package
+
 FROM eclipse-temurin:21
 WORKDIR /opt
+COPY --from=builder /build/target/*.jar /opt/app.jar
 ENV PORT 8080
 EXPOSE 8080
-COPY ./target/*.jar /opt/app.jar
 ENTRYPOINT exec java $JAVA_OPTS -jar app.jar
