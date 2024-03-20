@@ -29,5 +29,5 @@ jobs:
               working-directory: 'login'
               run:
                 gcloud auth configure-docker us-central1-doker.pkg.dev
-                docker build -t us-central1-docker.pkg.dev/$GCP_PROJECT_ID/wellness-tracking-service-containers/login-service:latest --file Dockerfile .
+                docker build -t us-central1-docker.pkg.dev/$GCP_PROJECT_ID/wellness-tracking-service-containers/login-service:latest
                 docker push us-central1-docker.pkg.dev/$GCP_PROJECT_ID/wellness-tracking-service-containers/login-service:latest
