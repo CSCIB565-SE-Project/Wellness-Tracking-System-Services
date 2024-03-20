@@ -11,28 +11,41 @@ jobs:
     deploy:
         runs-on: ubuntu-latest
         steps:
-            - name: Code checkout
-              uses: actions/checkout@v2
+            - name: 'Checkout'
+              uses: 'actions/checkout@v3'
+     
+     
+            - name: 'Google auth'
+              id: 'auth'
+              uses: 'google-github-actions/auth@v1'
               with:
-                path: 'login'
+                workload_identity_provider: '${{ secrets.WIF_PROVIDER }}'
+                service_account: '${{ secrets.WIF_SERVICE_ACCOUNT }}'
 
-            - name: Install GCP CLI
-              uses: google-github-actions/setup-gcloud@master
+            - name: 'Set up Cloud SDK'
+              uses: 'google-github-actions/setup-gcloud@v1'
               with:
-                project_id: ${{ secrets.GCP_PROJECT_ID }}
-                service_account_key: ${{ secrets.GCP_APPLICATION_CREDENTIALS }}
-                export_default_credentials: true
-
-            - name: Build Docker Image
-              working-directory: 'login'
-              run: docker build -t login-service:latest
-              
-            - name: Configure Docker Client
+                project_id: '${{ env.PROJECT_ID }}'
+         
+            - name: 'Docker auth'
               run: |-
-                gcloud auth configure-docker --quite
+                gcloud auth configure-docker us-central1-doker.pkg.dev
+                
+                  
+            - name: 'Build and push container'
+              run: |-
+                docker build -t us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.APP }}/${{ env.APP }}:${{ github.sha }}" ./login
+                docker push us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.APP }}/${{ env.APP }}:${{ github.sha }}"
 
-            - name: Push Docker Image
-              env:
-                GOOGLE_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
-              run:
-                docker push gcr.io/$GCP_PROJECT_ID/wellness-tracking-service-containers/login-service:latest
+                - name: 'Create release name'
+                run: |-
+                  echo "RELEASE_NAME=${{ env.APP }}-${GITHUB_SHA::7}-${GITHUB_RUN_NUMBER}" >> ${GITHUB_ENV}
+         
+         
+            - name: 'Create Cloud Deploy release'
+              uses: 'google-github-actions/create-cloud-deploy-release@v0'
+              with:
+                delivery_pipeline: '${{ env.APP }}'
+                name: '${{ env.RELEASE_NAME }}'
+                skaffold_file: 'config/skaffold.yaml'
+                images: 'app=us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.APP }}/${{ env.APP }}:${{ github.sha }}'
