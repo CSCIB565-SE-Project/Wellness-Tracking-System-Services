@@ -17,7 +17,7 @@ jobs:
                 path: 'login'
 
             - name: Install GCP CLI
-              uses: google-github-actions/setup-gcloud@v0
+              uses: google-github-actions/setup-gcloud@v2
               with:
                 project_id: ${{ secrets.GCP_PROJECT_ID }}
                 service_account_key: ${{ secrets.GCP_APPLICATION_CREDENTIALS }}
@@ -29,10 +29,16 @@ jobs:
                 java-version: '21'
                 distribution: 'temurin'
                 architecture: x64
-            
+
+            - name: Print Current Directory
+              run: pwd
+              
+            - name: Print Login Directory Contents
+              run: ls -la login
+
             - name: Build with Maven
               working-directory: 'login'
-              run: mvn --batch-mode --update-snapshots verify
+              run: mvn clean package
 
             - name: Build & Push Docker Image
               env:
