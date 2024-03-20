@@ -1,5 +1,3 @@
-server:
-    port: 9191
 spring:
     datasource:
         # url: jdbc:mysql://localhost:3306/fitinc1
