@@ -37,8 +37,8 @@ jobs:
                   
             - name: 'Build and push container'
               run: |-
-                docker build -t us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.APP }}/${{ env.APP }}:${{ github.sha }}" ./login
-                docker push us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.APP }}/${{ env.APP }}:${{ github.sha }}"
+                docker build -t "us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.APP }}/${{ env.APP }}:${{ github.sha }}" ./login
+                docker push "us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.APP }}/${{ env.APP }}:${{ github.sha }}"
 
                 - name: 'Create release name'
                 run: |-
