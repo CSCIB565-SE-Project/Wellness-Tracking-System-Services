@@ -37,18 +37,18 @@ jobs:
                   
             - name: 'Build and push container'
               run: |-
-                docker build -t "us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.APP }}/${{ env.APP }}:${{ github.sha }}" ./login
-                docker push "us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.APP }}/${{ env.APP }}:${{ github.sha }}"
+                docker build -t "us-central1-docker.pkg.dev/green-mercury-414423/login/login:${{ github.sha }}" ./login
+                docker push "us-central1-docker.pkg.dev/green-mercury-414423/login/login:${{ github.sha }}"
 
                 - name: 'Create release name'
                 run: |-
-                  echo "RELEASE_NAME=${{ env.APP }}-${GITHUB_SHA::7}-${GITHUB_RUN_NUMBER}" >> ${GITHUB_ENV}
+                  echo "RELEASE_NAME=login-${GITHUB_SHA::7}-${GITHUB_RUN_NUMBER}" >> ${GITHUB_ENV}
          
          
             - name: 'Create Cloud Deploy release'
               uses: 'google-github-actions/create-cloud-deploy-release@v0'
               with:
-                delivery_pipeline: '${{ env.APP }}'
-                name: '${{ env.RELEASE_NAME }}'
+                delivery_pipeline: 'login'
+                name: 'loginservice'
                 skaffold_file: 'config/skaffold.yaml'
-                images: 'app=us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.APP }}/${{ env.APP }}:${{ github.sha }}'
+                images: 'app=us-central1-docker.pkg.dev/green-mercury-414423/login/login:${{ github.sha }}'
