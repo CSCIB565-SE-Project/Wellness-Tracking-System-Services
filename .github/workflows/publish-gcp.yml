@@ -4,6 +4,8 @@ on:
     push:
         branches:
             - 'main'
+        paths:
+            - 'login/**'
 
 jobs:
     deploy:
@@ -11,6 +13,8 @@ jobs:
         steps:
             - name: Code checkout
               uses: actions/checkout@v2
+              with:
+                path: 'login'
 
             - name: Install GCP CLI
               uses: google-github-actions/setup-gcloud@v0
@@ -27,11 +31,13 @@ jobs:
                 architecture: x64
             
             - name: Build with Maven
+              working-directory: 'login'
               run: mvn --batch-mode --update-snapshots verify
 
             - name: Build & Push Docker Image
               env:
                 GOOGLE_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
+              working-directory: 'login'
               run:
                 gcloud auth configure-docker us-central1-doker.pkg.dev
                 docker build -t us-central1-docker.pkg.dev/$GCP_PROJECT_ID/wellness-tracking-service-containers/login-service:latest --file Dockerfile .
