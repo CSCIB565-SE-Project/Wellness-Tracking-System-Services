@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "green-mercury-414423",
+  "private_key_id": "c3e201744892763b62bac2377120e50b8980e549",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC9gA/Ywc+a9HzD\nuW26Xvon3a5PUO51FQkeC7jIeGX3GlXYDrSq+zPJdSMgm57XePR+ARzmiUFV9s90\npdY/Z29RwaMzG38DrxQp3ZgPeBTDAfLv/QCLxJsaIWL5RP5YeUP7mQzkqUdoP+rO\nXvPxZsVDobRvrqbYc5/l33ZptBcaCZR0Uw3bN2mVNsjTH+OVy9rKEmwDoKBuMUqQ\nlt0EsIQTw+o+w+TNF/dNq7pXmtEUTxpEXyDbpKQgqGeHo0AgajlgMce67coE8op1\nd7AwkfQpw2AI1V3p1hmkvpC14qqWcRsBL/Y1Ij2g19X/5b3UObfdEPNAFL+ZnUjm\nPsI4tN3zAgMBAAECggEACkVGlpjqh5t4p6MFL3S2WjLJn8LjKbVaKSa5fSQJYrsq\nq+sgH6Q9yk1u+fV1Rnhnx+yHhHcr81zNIaVbV1Rj1CqKjdqPp8N1dE9uTmhTt74D\nTL6JqQme3muw0ZHLtz/bT2ecK0iBdkUAlO7QieToDCJXhTYSFOkvYWYbJN994QtL\n4mZgo3F78CaUASio6+NHYdHWjfXqN6RZ6BgfcqS/v9BUS7Mg2JiA1GJmhNiVQu6u\nzVGRsa8HGSIMxIFd3oMfMV3EPwR6MxUdb+lp0PCak/S1lE/9iX+e8q39I8jAw3zP\nr8qEDjPWb9NvFotFqd7XrMqPB1NDourf1/ggwI33AQKBgQDzM/ccQ09YZwGuEPH4\nmudgy+AqJFKChI9hixg5MEUckORYtsUdMSkLz9HREr+IQhIFcYD/h/T+/xxkWkeo\nA6r11Hde4yXr1/ymtp3drr7YFdjqIFgdNzOqIXrSGs2mpWwLNQc8Oic23eqnaySA\n8s3R6CgV3tRYCKSXPsfmiGAn7wKBgQDHeLNdSC+bcOiyase2wqluGA3n8Ntdgxrh\nNKCw5ELfHDytfjwlUpxd4MoiZ4QRywkQf9BdDnHlHpTP90tHZno9dOJdiws9V600\nGpwBCkyDiG+KA8N2Nkx+VoMuVXfb2iGpaWffZ/YUVdGVpU4yIaxdC8/L8mI1iQG4\nXj25nyBGPQKBgQCj8AaF7bWBoMXYISIK89g+Po/XuG5J/rNsDEgC3M/php32UxWi\nLO4/QRJtPZcQcYEWXEGZfnsenLb1yol87yQB2/uvYazBQvHTK0xVD6Mjo+55O95J\nq1lPOIxDLsArslyXXWKILacbbBHuUuHjbkhhU34Z5//5a7IPJcm4U3uFzwKBgD3b\n7KPtEvZ9mWxbOPwweiKuSwG27BCf6+ITVBIHd8WBGEAlebmJWPy0DXuF5qst7+2x\n9YgmRqPrS/MCmdHWseoFKX4g9KddXVVfOyoHa5sO4KhIaoFqbWZwpdXko3sGtpG3\nIoNh1iqQQqLJ1OovDyj71MFGtbYseuAWOcYq1vNxAoGBANXRDTvlSerQhKRvPd0F\nFpln51Ec2XOXBCe3pEJxZuVF9D5TlM7gk3VYkAcii6gLzr5cIpwrJxkvmKorbdxR\njtL8SGyWXekmlijoQbwPqoPJdQ/cs61NjDWubf3tRO0nMaM6PhQ6U2zRMFFEG9PG\nTVHJKD8dfxVUYKCvFxNYz1LD\n-----END PRIVATE KEY-----\n",
+  "client_email": "wellness-tracking-services@green-mercury-414423.iam.gserviceaccount.com",
+  "client_id": "106740888661507576691",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/wellness-tracking-services%40green-mercury-414423.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
