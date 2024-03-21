@@ -14,7 +14,7 @@ RUN apt-get update \
 RUN curl -o cloud-sql-proxy curl -o cloud-sql-proxy https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.10.1/cloud-sql-proxy.linux.amd64
 RUN chmod +x cloud-sql-proxy
 COPY --from=builder /build/green-mercury-414423-c3e201744892.json /opt/green-mercury-414423-c3e201744892.json
-RUN ./cloud-sql-proxy --credentials-file /opt/green-mercury-414423-c3e201744892.json green-mercury-414423:us-central1:wellness &
+RUN ./cloud-sql-proxy --credentials-file /opt/green-mercury-414423-c3e201744892.json green-mercury-414423:us-central1:wellness=tcp:0.0.0.0:3306 &
 COPY --from=builder /build/target/*.jar /opt/app.jar
 ENV PORT 8080
 EXPOSE 8080
