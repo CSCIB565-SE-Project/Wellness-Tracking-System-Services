@@ -1,13 +1,12 @@
-FROM eclipse-temurin:21-jdk-alpine as builder
-WORKDIR /opt/app
-COPY .mvn .mvn
-COPY mvnw pom.xml ./
-RUN .mvnw dependency:go-offline
-COPY ./src ./src
-RUN ./mvnw clean install
+FROM maven:3.8.5 AS builder
+WORKDIR /build
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package
 
-FROM eclipse-temurin:17-jre-alpine
-WORKDIR /opt/app
+FROM eclipse-temurin:21
+WORKDIR /opt
+COPY --from=builder /build/target/*.jar /opt/app.jar
+ENV PORT 8080
 EXPOSE 8080
-COPY --from=builder /opt/app/target/*.jar /opt/app/*.jar
-ENTRYPOINT [ "java", "-jar", "/opt/app/*.jar" ]
+ENTRYPOINT exec java $JAVA_OPTS -jar app.jar

@@ -1,0 +1,54 @@
+name: Docker Image CI for GCP
+
+on:
+    push:
+        branches:
+            - 'main'
+        paths:
+            - 'login/**'
+
+jobs:
+    deploy:
+        permissions:
+          contents: 'read'
+          id-token: 'write'
+        runs-on: ubuntu-latest
+        steps:
+            - name: 'Checkout'
+              uses: 'actions/checkout@v3'
+     
+     
+            - name: 'Google auth'
+              id: 'auth'
+              uses: 'google-github-actions/auth@v1'
+              with:
+                workload_identity_provider: '${{ secrets.WIF_PROVIDER }}'
+                service_account: '${{ secrets.WIF_SERVICE_ACCOUNT }}'
+
+            - name: 'Set up Cloud SDK'
+              uses: 'google-github-actions/setup-gcloud@v1'
+              with:
+                project_id: '${{ env.PROJECT_ID }}'
+         
+            - name: 'Docker auth'
+              run: |-
+                gcloud auth configure-docker us-central1-docker.pkg.dev
+                
+                  
+            - name: 'Build and push container'
+              run: |-
+                docker build -t "us-central1-docker.pkg.dev/green-mercury-414423/login/login:${{ github.sha }}" ./login
+                docker push "us-central1-docker.pkg.dev/green-mercury-414423/login/login:${{ github.sha }}"
+
+                - name: 'Create release name'
+                run: |-
+                  echo "RELEASE_NAME=login-${GITHUB_SHA::7}-${GITHUB_RUN_NUMBER}" >> ${GITHUB_ENV}
+         
+         
+            - name: 'Create Cloud Deploy release'
+              uses: 'google-github-actions/create-cloud-deploy-release@v0'
+              with:
+                delivery_pipeline: 'login'
+                name: 'loginservice'
+                skaffold_file: 'config/skaffold.yaml'
+                images: 'app=us-central1-docker.pkg.dev/green-mercury-414423/login/login:${{ github.sha }}'
