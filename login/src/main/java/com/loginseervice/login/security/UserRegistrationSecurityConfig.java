@@ -25,7 +25,6 @@ public class UserRegistrationSecurityConfig {
         return new SessionRegistryImpl();
     }
 
-    @SuppressWarnings("deprecation")
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // return http
