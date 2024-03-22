@@ -42,7 +42,10 @@ public class UserRegistrationSecurityConfig {
             .invalidSessionUrl("/login") // Redirect to login page for invalid sessions
             .maximumSessions(1).expiredUrl("/login?expired") // Allow only one session per user
         )
-        .formLogin(Customizer.withDefaults()) // Enable form login
+        .formLogin(form -> form
+                .loginPage("/login") // Specify custom login page URL here
+                .permitAll()
+            )
         .build();
 
     }
