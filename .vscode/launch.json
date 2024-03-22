@@ -8,6 +8,13 @@
             "type": "java",
             "name": "LoginApplication",
             "request": "launch",
+            "mainClass": "LoginApplication",
+            "projectName": "login"
+        },
+        {
+            "type": "java",
+            "name": "LoginApplication",
+            "request": "launch",
             "mainClass": "com.loginseervice.login.LoginApplication",
             "projectName": "login"
         },
