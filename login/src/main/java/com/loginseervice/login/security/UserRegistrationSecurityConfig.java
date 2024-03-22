@@ -46,6 +46,7 @@ public class UserRegistrationSecurityConfig {
         //         .permitAll()
         //     )
         // .build();
+        //try to add lambda expression
         return http.cors(Customizer.withDefaults()).csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(requests -> requests.requestMatchers("/register/**").permitAll())
                 .authorizeHttpRequests(requests -> requests.requestMatchers("/login/**").permitAll())
