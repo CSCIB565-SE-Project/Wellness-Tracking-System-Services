@@ -41,13 +41,15 @@ public class UserRegistrationSecurityConfig {
         //     .invalidSessionUrl("/login") // Redirect to login page for invalid sessions
         //     .maximumSessions(1).expiredUrl("/login?expired") // Allow only one session per user
         // )
-        //.build();
+        // .formLogin(form -> form
+        //         .loginPage("/login") // Specify custom login page URL here
+        //         .permitAll()
+        //     )
+        // .build();
         return http.cors(Customizer.withDefaults()).csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(requests -> requests.requestMatchers("/register/**").permitAll())
                 .authorizeHttpRequests(requests -> requests.requestMatchers("/login/**").permitAll())
                 .authorizeHttpRequests(requests -> requests.requestMatchers("/users/**")
                 .hasAnyAuthority("USER", "ADMIN")).build();
-                //formLogin(Customizer.withDefaults()).build();
-
     }
 }
