@@ -41,7 +41,7 @@ public class UserRegistrationSecurityConfig {
             .maximumSessions(1).expiredUrl("/login?expired") // Allow only one session per user
         )
         .formLogin(form -> form
-            .loginPage("/login") // Specify custom login page URL here
+            .loginPage("http://localhost:3000") // Specify custom login page URL here
             .permitAll()
         )
         .build();
