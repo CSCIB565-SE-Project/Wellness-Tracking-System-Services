@@ -96,7 +96,7 @@ public class UserService implements IUserService{
         User usr = null;
         Boolean status = false;
         Optional<User> user = this.findByEmail(request.email());
-        if(user != null){
+        if(user.isPresent()){
             if(user.get().isEnabled()){
                 String password = request.password();
                 String encodedPassword = this.getPasswordEmail(user);

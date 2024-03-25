@@ -1,11 +1,27 @@
 require('dotenv').config();
 const express = require('express');
+const mysql = require('mysql');
+import userRoutes from "./routes/users.js";
+import videoRoutes from "./routes/videos.js";
+import commentRoutes from "./routes/comments.js";
+
 const { Storage } = require('@google-cloud/storage');
 const storage = new Storage({
   projectId: "My Project 15171",
   keyFilename: "green-mercury-414423-8f5b1eb3d98f.json",
 });
+
 const app = express();
+
+const connect = () => {
+  mongoose.connect(process.env.MONGODB).then(() => {
+    console.log("Connected to Database");
+  }).catch(err => {
+    throw err;
+  });
+};
+
+app.use("/api/users", userRoutes);
 
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/index.html");
