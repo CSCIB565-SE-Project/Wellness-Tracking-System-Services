@@ -1,10 +1,21 @@
-import { createError } from "../error";
-import Trainer from "../models/User.js";
+const { createError } = require("../error");
+const User = require("../models/User.js");
+const Trainer = require("../models/Trainer.js");
 
-export const update = async(req, res, next) => {
+const addUser = async (req, res, next) => {
+    try {
+      const newUser = new User({ ...req.body }); 
+      await newUser.save();
+      res.status(200).send("User Onboarded to CDN database!");
+    } catch (err) {
+      next(err);
+    }
+  };
+
+const update = async(req, res, next) => {
     if(req.params.id === req.user.id){
         try{
-            const updatedUser  = await Trainer.findByIdAndUpdate(req.params.id, {
+            const updatedUser  = await User.findByIdAndUpdate(req.params.id, {
                 $set: req.body
             },
             { new: true }
@@ -20,10 +31,10 @@ export const update = async(req, res, next) => {
     }
 };
 
-export const deleteUser = async(req, res, next) => {
+const deleteUser = async(req, res, next) => {
     if(req.params.id === req.user.id){
         try{
-            await Trainer.findByIdAndDelete(req.params.id);
+            await User.findByIdAndDelete(req.params.id);
             res.status(200).json("User Deleted");
         }
         catch(err){
@@ -35,9 +46,9 @@ export const deleteUser = async(req, res, next) => {
     }
 }
 
-export const getUser = async(req, res, next) => {
+const getUser = async(req, res, next) => {
     try{
-        const user = await Trainer.findById(req.params.id);
+        const user = await User.findById(req.params.id);
         res.status(200).json(user);
     }
     catch(err){
@@ -45,10 +56,13 @@ export const getUser = async(req, res, next) => {
     }
 }
 
-export const subscribe = async(req, res, next) => {
+const subscribe = async(req, res, next) => {
     try{
-        await Trainer.findByIdAndUpdate(req.user.id, {
-            $push:{subscribedUsers:req.params.id}
+        await User.findByIdAndUpdate(req.user.id, {
+            $push:{subscribedTrainers:req.params.id}
+        });
+        await Trainer.findByIdAndUpdate(req.params.id, {
+            $push:{subscribedUsers:req.user.id}
         });
         await Trainer.findByIdAndUpdate(req.params.id, {
             $inc: { subscribers: 1}
@@ -60,10 +74,13 @@ export const subscribe = async(req, res, next) => {
     }
 }
 
-export const unsubscribe = async(req, res, next) => {
+const unsubscribe = async(req, res, next) => {
     try{
-        await Trainer.findByIdAndUpdate(req.user.id, {
-            $pull: { subscribedUsers: req.params.id }
+        await User.findByIdAndUpdate(req.user.id, {
+            $pull: { subscribedTrainers: req.params.id }
+        });
+        await Trainer.findByIdAndUpdate(req.params.id, {
+            $pull: { subscribedUsers: req.user.id }
         });
         await Trainer.findByIdAndUpdate(req.params.id, {
             $inc: { subscribers: -1 }
@@ -75,33 +92,4 @@ export const unsubscribe = async(req, res, next) => {
     }
 }
 
-export const like = async(req, res, next) => {
-    const id = req.user.id;
-    const videoId = req.user.videoId;
-    try{
-        await Video.findByIdAndUpdate(videoId, {
-            $addToSet:{likes:id},
-            $pull:{dislikes:id}
-        });
-        res.status(200).json("Liked");
-    }
-    catch(err){
-        next(err);
-    }
-}
-
-export const dislike = async(req, res, next) => {
-    const id = req.user.id;
-    const videoId = req.user.videoId;
-    try{
-        await Video.findByIdAndUpdate(videoId, {
-            $addToSet:{dislikes:id},
-            $pull:{likes:id}
-        });
-        res.status(200).json("Disliked");
-    }
-    catch(err){
-        next(err);
-    }
-}
-
+module.exports = { addUser, deleteUser, getUser, subscribe, unsubscribe, update };

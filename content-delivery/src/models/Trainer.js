@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const UserSchema = new mongoose.Schema(
+const TrainerSchema = new mongoose.Schema(
     {
         userId: {
             type: String,
@@ -9,10 +9,14 @@ const UserSchema = new mongoose.Schema(
         img: {
             type: String,
         },
-        subscribedTrainers: {
+        subscribers: {
+            type: Number,
+            default: 0
+        },
+        subscribedUsers: {
             type: [String]
         }
     }
 );
 
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model("Trainer", TrainerSchema);

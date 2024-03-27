@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const VideoSchema = new mongoose.Schema(
     {
-        userId: {
+        trainerId: {
             type: String,
             required: true
         },
@@ -19,6 +19,14 @@ const VideoSchema = new mongoose.Schema(
             required: true,
         },
         videoUrl: {
+            type: String,
+            required: true
+        },
+        modeOfInstruction: {
+            type: String,
+            required: true
+        },
+        typeOfWorkout: {
             type: String,
             required: true
         },
@@ -42,4 +50,4 @@ const VideoSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-export default mongoose.model("Video", VideoSchema);
+module.exports = mongoose.model("Video", VideoSchema);

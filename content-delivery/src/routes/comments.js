@@ -1,6 +1,6 @@
 const express = require('express');
-import { addComment, deleteComment, getComment } from "../controllers/comment.js";
-import { verifyToken } from "../verifyToken.js";
+const { addComment, deleteComment, getComment } = require("../controllers/comment.js");
+const { verifyToken } = require("../verifyToken.js");
 
 const router = express.Router();
 
@@ -8,4 +8,4 @@ router.post("/", verifyToken, addComment);
 router.delete("/:id", verifyToken, deleteComment)
 router.get("/:videoId", getComment)
 
-export default router;
+module.exports = router;

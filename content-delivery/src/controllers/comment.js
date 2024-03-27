@@ -1,7 +1,7 @@
-import { createError } from "../error";
-import Comment from "../models/Comment.js";
-import Video from "../models/Video.js";
-export const addComment = async(req, res, next) => {
+const { createError } = require("../error");
+const Comment = require("../models/Comment.js");
+const Video = require("../models/Video.js");
+const addComment = async(req, res, next) => {
     const newComment = new Comment({...req.body, userId: req.user.id});
     try{
         const savedComment = await newComment.save();
@@ -12,7 +12,7 @@ export const addComment = async(req, res, next) => {
     }
 }
 
-export const deleteComment = async(req, res, next) => {
+const deleteComment = async(req, res, next) => {
     try{
         const comment = await Comment.findById(req.params.id);
         const video = await Video.findById(req.params.id);
@@ -29,7 +29,7 @@ export const deleteComment = async(req, res, next) => {
     }
 }
 
-export const getComment = async(req, res, next) => {
+const getComment = async(req, res, next) => {
     try{
         const comments = await Comment.find({videoId: req.params.videoId});
         res.status(200).json(comments);
@@ -38,3 +38,5 @@ export const getComment = async(req, res, next) => {
         next(err);
     }
 }
+
+module.exports = { addComment, deleteComment, getComment };
