@@ -20,10 +20,9 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/login")
-//so frontend can access in local testing
 @CrossOrigin(origins = "http://localhost:3000")
 public class LoginController {
-    
+
     private final UserService userService;
     
     @PostMapping
@@ -33,33 +32,18 @@ public class LoginController {
     }
 
     @GetMapping("/oauth2/google")
-    public ResponseEntity<String> googleOAuth2Callback(OAuth2AuthenticationToken authentication) {
-        if (authentication != null && authentication.isAuthenticated()) {
-            OAuth2User oauth2User = authentication.getPrincipal();
-            String email = oauth2User.getAttribute("email");
-            String name = oauth2User.getAttribute("name");
-
-            // You can customize the response as needed
-            return ResponseEntity.ok("Logged in with Google OAuth2: Email - " + email + ", Name - " + name);
-        }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Google OAuth2 authentication failed");
+    public ResponseEntity<String> initiateGoogleOAuth2Flow() {
+        // Redirect to Google's OAuth2 authentication page
+        String googleAuthUrl = "https://accounts.google.com/o/oauth2/v2/auth"
+                + "?client_id=420401997087-mtrv8lq0u4rc2lr9sunuitspc4q32v45.apps.googleusercontent.com"
+                + "&redirect_uri=http://localhost:8080/login/oauth2/google/callback"
+                + "&response_type=code"
+                + "&scope=email profile openid";
+        return ResponseEntity.status(HttpStatus.FOUND).body(googleAuthUrl);
     }
 
-    @GetMapping("/oauth2/facebook")
-    public ResponseEntity<String> facebookOAuth2Callback(OAuth2AuthenticationToken authentication) {
-        if (authentication != null && authentication.isAuthenticated()) {
-            OAuth2User oauth2User = authentication.getPrincipal();
-            String email = oauth2User.getAttribute("email");
-            String name = oauth2User.getAttribute("name");
-
-            // You can customize the response as needed
-            return ResponseEntity.ok("Logged in with Facebook OAuth2: Email - " + email + ", Name - " + name);
-        }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Facebook OAuth2 authentication failed");
-    }
-    
-    @GetMapping("/login/oauth2/google/callback")
-    public ResponseEntity<String> googleOAuth2Callback(@RequestParam(name = "code") String code, OAuth2AuthenticationToken authentication) {
+    @GetMapping("/oauth2/google/callback")
+    public ResponseEntity<String> handleGoogleOAuth2Callback(@RequestParam(name = "code") String code, OAuth2AuthenticationToken authentication) {
         if (authentication != null && authentication.isAuthenticated()) {
             OAuth2User oauth2User = authentication.getPrincipal();
             String email = oauth2User.getAttribute("email");
@@ -71,8 +55,18 @@ public class LoginController {
         }
     }
 
-    @GetMapping("/login/oauth2/facebook/callback")
-    public ResponseEntity<String> facebookOAuth2Callback(@RequestParam(name = "code") String code, OAuth2AuthenticationToken authentication) {
+    @GetMapping("/oauth2/facebook")
+    public ResponseEntity<String> initiateFacebookOAuth2Flow() {
+        // Redirect to Facebook's OAuth2 authentication page
+        String facebookAuthUrl = "https://www.facebook.com/v11.0/dialog/oauth"
+                + "?client_id=712691594347760"
+                + "&redirect_uri=http://localhost:8080/login/oauth2/facebook/callback"
+                + "&scope=email public_profile";
+        return ResponseEntity.status(HttpStatus.FOUND).body(facebookAuthUrl);
+    }
+
+    @GetMapping("/oauth2/facebook/callback")
+    public ResponseEntity<String> handleFacebookOAuth2Callback(@RequestParam(name = "code") String code, OAuth2AuthenticationToken authentication) {
         if (authentication != null && authentication.isAuthenticated()) {
             OAuth2User oauth2User = authentication.getPrincipal();
             String email = oauth2User.getAttribute("email");
@@ -84,3 +78,4 @@ public class LoginController {
         }
     }
 }
+
