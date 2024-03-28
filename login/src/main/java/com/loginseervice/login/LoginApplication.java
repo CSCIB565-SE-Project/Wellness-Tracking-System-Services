@@ -12,7 +12,7 @@ public class LoginApplication {
 		SpringApplication.run(LoginApplication.class, args);
 	}
 
-	 @Bean
+	@Bean
     public HttpSessionEventPublisher httpSessionEventPublisher() {
         return new HttpSessionEventPublisher();
     }
