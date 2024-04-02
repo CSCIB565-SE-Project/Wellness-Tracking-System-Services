@@ -40,4 +40,16 @@ public class AdminController {
         }            
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Failed to Approve Content");
     }
+
+    @PostMapping("/reject")
+    public ResponseEntity<String> rejectContent(@RequestBody VideoRequest videoRequest) {
+        Optional<Video> optionalVideo = notifyService.getVideoById(videoRequest.id());
+        Video video = optionalVideo.orElseThrow(() -> new RuntimeException("Video not found"));
+        Boolean result = notifyService.rejectRequest(video.getId());
+        if(result){
+            return ResponseEntity.ok("Content Rejected");
+        }            
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Failed to Reject Content");
+    }
+    
 }

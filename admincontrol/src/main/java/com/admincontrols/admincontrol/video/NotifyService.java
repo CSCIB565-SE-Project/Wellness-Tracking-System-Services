@@ -33,5 +33,16 @@ public class NotifyService implements INotifyService{
             return false;
         }
     }
+
+    @Override
+    public boolean rejectRequest(String id){
+        try{
+            videoRepository.deleteById(id);
+            return true;
+        }
+        catch(Exception exception){
+            return false;
+        }
+    }
 }
 
