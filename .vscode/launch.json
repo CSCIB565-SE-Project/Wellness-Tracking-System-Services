@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "AdmincontrolApplication",
+            "request": "launch",
+            "mainClass": "com.admincontrols.admincontrol.AdmincontrolApplication",
+            "projectName": "admincontrol"
+        },
+        {
+            "type": "java",
             "name": "LoginApplication",
             "request": "launch",
             "mainClass": "LoginApplication",

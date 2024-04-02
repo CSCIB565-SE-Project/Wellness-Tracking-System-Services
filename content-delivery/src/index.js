@@ -5,6 +5,7 @@ const userRoutes = require("./routes/users.js");
 const trainerRoutes = require("./routes/trainers.js");
 const videoRoutes = require("./routes/videos.js");
 const commentRoutes = require("./routes/comments.js");
+const workoutplanRoutes = require("./routes/workoutplans.js")
 //const cookieParser = require("cookie-parser");
 
 const app = express();
@@ -26,6 +27,8 @@ app.use("/api/trainers", trainerRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/videos", videoRoutes);
 app.use("/api/comments", commentRoutes);
+app.use("/api/workoutplan", workoutplanRoutes);
+
 
 app.use((err, req, res, next) => {
   const status = err.status || 500;
@@ -42,5 +45,6 @@ app.get("/", function (req, res) {
 });
 
 app.listen(8000, function () {
+  connect();
   console.log("Listening on port 8000!");
 });

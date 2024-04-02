@@ -2,12 +2,18 @@ const { query } = require("express");
 const { createError } = require("../error.js");
 const Trainer = require("../models/Trainer.js");
 const Video = require("../models/Video.js");
+const WorkoutPlan = require("../models/WorkoutPlan.js");
 const User = require("../models/User.js");
 
 const addVideo = async(req, res, next) => {
     const newVideo = new Video({ trainerId: req.user.id, ...req.body });
     try{
         const savedVideo = await newVideo.save()
+        const updatedWorkoutPlan = await WorkoutPlan.findByIdAndUpdate(req.query.workoutPlanId, {
+            $addToSet: {videoIds:savedVideo.id}
+        },
+        { new: true }
+        );
         res.status(200).json(savedVideo);
     }
     catch(err){
@@ -22,6 +28,11 @@ const deleteVideo = async(req, res, next) => {
             return next(createError(404, "Not Found"));
         }
         if(req.user.id === video.trainerId){
+            const updatedWorkoutPlan = await WorkoutPlan.findByIdAndUpdate(req.query.workoutPlanId, {
+                $pull: {videoIds: video.id}
+            },
+            { new: true }
+            );
             await Video.findByIdAndDelete(req.params.id);
             res.status(200).json("Deleted");
         }
@@ -198,7 +209,7 @@ const parameterizedSearch = async (req, res, next) => {
 
 const like = async(req, res, next) => {
     const id = req.user.id;
-    const videoId = req.user.videoId;
+    const videoId = req.params.videoId;
     try{
         await Video.findByIdAndUpdate(videoId, {
             $addToSet:{likes:id},
@@ -213,7 +224,7 @@ const like = async(req, res, next) => {
 
 const dislike = async(req, res, next) => {
     const id = req.user.id;
-    const videoId = req.user.videoId;
+    const videoId = req.params.videoId;
     try{
         await Video.findByIdAndUpdate(videoId, {
             $addToSet:{dislikes:id},
