@@ -68,7 +68,7 @@ public class UserService implements IUserService, ITrainerService {
         newUser.setPassword(passwordEncoder.encode(request.password()));
         newUser.setRole(request.role());
         User usr = userRepository.save(newUser);
-        if(request.role() == "PROFESSIONAL"){
+        if(request.role().equals("PROFESSIONAL")){
             try{
                 registerTrainer(usr);
             }
