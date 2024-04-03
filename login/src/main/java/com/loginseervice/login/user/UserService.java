@@ -130,7 +130,7 @@ public class UserService implements IUserService, ITrainerService {
                     status = true;
                     statusMessage = "Login Success";
                 } else {
-                    statusMessage = "Password Mismatch";
+                    statusMessage = "Incorrect Password";
                 }
             } else {
                 statusMessage = "User yet to be verified!";
