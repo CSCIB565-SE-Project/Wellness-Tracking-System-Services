@@ -1,0 +1,15 @@
+spring:
+    datasource:
+        url: jdbc:mysql://wellness-tracking-rdb.mysql.database.azure.com:3306/fitinc?createDatabaseIfNotExist=true
+        username: serviceuser
+        password: 136Mm136
+        driver-class-name: com.mysql.cj.jdbc.Driver
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+    data:
+        mongodb:
+            uri: mongodb+srv://contentuser:Wellness123@wellness-tracking-content-db.mongocluster.cosmos.azure.com/wellnesstrackingcontentdb?tls=true&authMechanism=SCRAM-SHA-256&retrywrites=false&maxIdleTimeMS=120000
+          
+logging.level.org.springframework.security: DEBUG
