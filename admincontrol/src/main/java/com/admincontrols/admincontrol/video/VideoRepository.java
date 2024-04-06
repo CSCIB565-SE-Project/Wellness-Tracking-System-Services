@@ -6,4 +6,5 @@ import java.util.Optional;
 public interface VideoRepository extends MongoRepository<Video, String> {
     List<Video> findByIsApprovedFalse();
     Optional<Video> findById(Integer id);
+    void deleteById(String id);
 }

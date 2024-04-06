@@ -26,8 +26,9 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements IUserService {
+public class UserService implements IUserService, ITrainerService {
     private final UserRepository userRepository;
+    private final TrainerRepository trainerRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final VerificationTokenRepository tokenRepository;
@@ -36,6 +37,18 @@ public class UserService implements IUserService {
     @Override
     public List<User> getUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public void registerTrainer(User user){
+        Trainer trainer = new Trainer();
+        trainer.setUserId(user.getId().toString());
+        try{
+            trainerRepository.save(trainer);
+        }
+        catch(Exception exception){
+            throw exception;
+        }
     }
 
     @Override
@@ -54,7 +67,16 @@ public class UserService implements IUserService {
         newUser.setUsername(request.username());
         newUser.setPassword(passwordEncoder.encode(request.password()));
         newUser.setRole(request.role());
-        return userRepository.save(newUser);
+        User usr = userRepository.save(newUser);
+        if(request.role().equals("PROFESSIONAL")){
+            try{
+                registerTrainer(usr);
+            }
+            catch(Exception exception){
+                throw exception;
+            }
+        }
+        return usr;
     }
 
     @Override
@@ -108,7 +130,7 @@ public class UserService implements IUserService {
                     status = true;
                     statusMessage = "Login Success";
                 } else {
-                    statusMessage = "Password Mismatch";
+                    statusMessage = "Incorrect Password";
                 }
             } else {
                 statusMessage = "User yet to be verified!";
