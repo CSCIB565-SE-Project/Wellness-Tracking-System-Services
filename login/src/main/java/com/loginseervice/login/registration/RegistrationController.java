@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/register")
 @CrossOrigin(origins = "http://localhost:3000")
 public class RegistrationController {
 
@@ -31,7 +33,7 @@ public class RegistrationController {
     private final ApplicationEventPublisher publisher;
     private final VerificationTokenRepository tokenRepository;
 
-    @PostMapping("/register")
+    @PostMapping
     public ResponseEntity<?> registerUser(@RequestBody RegistrationRequest registrationRequest, final HttpServletRequest request) {
         try{
             User user = userService.registUser(registrationRequest);
@@ -43,7 +45,7 @@ public class RegistrationController {
         }
     }
 
-    @GetMapping("/register/verifyEmail")
+    @GetMapping("/verifyEmail")
     public String verifyEmail(@RequestParam("token") String token) {
         VerificationToken verifytoken = tokenRepository.findByToken(token);
         if (verifytoken.getUser().isEnabled()) {
@@ -56,7 +58,7 @@ public class RegistrationController {
         return "Invalid Verification Token";
     }
 
-    @PostMapping("/register/oauth2/google")
+    @PostMapping("/oauth2/google")
     public ResponseEntity<String> registerWithGoogle(@RequestBody RegistrationRequest registrationRequest, OAuth2AuthenticationToken authenticationToken, HttpServletRequest request) {
         if (authenticationToken != null && authenticationToken.isAuthenticated()) {
             OAuth2User oauth2User = authenticationToken.getPrincipal();
@@ -74,7 +76,7 @@ public class RegistrationController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Google OAuth2 registration failed");
     }
 
-    @PostMapping("/register/oauth2/facebook")
+    @PostMapping("/oauth2/facebook")
     public ResponseEntity<String> registerWithFacebook(@RequestBody RegistrationRequest registrationRequest, OAuth2AuthenticationToken authenticationToken, HttpServletRequest request) {
         if (authenticationToken != null && authenticationToken.isAuthenticated()) {
             OAuth2User oauth2User = authenticationToken.getPrincipal();
