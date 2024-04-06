@@ -8,7 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.GenericFilterBean; // Import GenericFilterBean instead of Filter
+import org.springframework.web.filter.GenericFilterBean;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -18,7 +18,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
-public class JwtAuthFilter extends GenericFilterBean { // Extend GenericFilterBean instead of implementing Filter
+public class JwtAuthFilter extends GenericFilterBean {
 
     @Autowired
     private JwtService jwtService;
@@ -32,17 +32,20 @@ public class JwtAuthFilter extends GenericFilterBean { // Extend GenericFilterBe
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         final String authorizationHeader = request.getHeader("Authorization");
-        String username = null;
+        Integer userId = null;
         String jwt = null;
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
-            username = jwtService.extractUsername(jwt);
+            userId = Integer.parseInt(jwtService.extractId(jwt)); // Parse the userId from string to integer
         }
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-            if (jwtService.validateToken(jwt, userDetails)) {
+        if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            // Validate token with user ID instead of username
+            if (jwtService.validateToken(jwt, userId)) {
+                // Load user details by user ID
+                UserDetails userDetails = this.userDetailsService.loadUserById(userId);
+
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
