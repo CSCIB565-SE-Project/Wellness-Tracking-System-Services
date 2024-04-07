@@ -4,6 +4,7 @@ const Trainer = require("../models/Trainer.js");
 const Video = require("../models/Video.js");
 const WorkoutPlan = require("../models/WorkoutPlan.js");
 const User = require("../models/User.js");
+const { deleteVideoFromBlob } = require("../utils/deleteBlob.js");
 
 const addVideo = async(req, res, next) => {
     const newVideo = new Video({ trainerId: req.user.id, ...req.body });
@@ -21,6 +22,26 @@ const addVideo = async(req, res, next) => {
     }
 }
 
+const deleteManyVideo = async(planId) => {
+    try{
+        const videos = await Video.find({workoutPlanId: planId});
+        for(var video in videos){
+            tempVideoURL = video.videoUrl;
+            try{
+                deleteVideoFromBlob(tempVideoURL);
+            } catch(error) {
+                throw error;
+            }
+        }
+        await Video.deleteMany({workOutPlanId: planId});
+        return true;
+    }
+    catch(error){
+        console.log(error);
+        return false;
+    }
+}
+
 const deleteVideo = async(req, res, next) => {
     try{
         const video = await Video.findById(req.params.id);
@@ -33,8 +54,14 @@ const deleteVideo = async(req, res, next) => {
             },
             { new: true }
             );
-            await Video.findByIdAndDelete(req.params.id);
-            res.status(200).json("Deleted");
+            const checkRes = deleteVideoFromBlob(video.videoUrl);
+            if(checkRes){
+                await Video.findByIdAndDelete(req.params.id);
+                res.status(200).json("Deleted");
+            }
+            else{
+                throw new Error("Error Deleting Video");
+            }       
         }
         else{
             return next(createError(403, "Unauthorized"));
@@ -237,4 +264,4 @@ const dislike = async(req, res, next) => {
     }
 }
 
-module.exports = { addVideo, deleteVideo, updateVideo, getVideo, getByTag, addView, random, trend, sub, search, parameterizedSearch, like, dislike };
+module.exports = { addVideo, deleteVideo, deleteManyVideo, updateVideo, getVideo, getByTag, addView, random, trend, sub, search, parameterizedSearch, like, dislike };

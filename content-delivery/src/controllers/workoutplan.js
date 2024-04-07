@@ -3,7 +3,7 @@ const { createError } = require("../error.js");
 const Trainer = require("../models/Trainer.js");
 const User = require("../models/User.js");
 const WorkoutPlan = require("../models/WorkoutPlan.js");
-const Video = require("../models/Video.js");
+const { deleteManyVideo } = require('./video.js');
 
 const addWorkoutPlan = async(req, res, next) => {
     console.log(req.body);
@@ -24,7 +24,7 @@ const deleteWorkoutPlan = async(req, res, next) => {
             return next(createError(404, "Not Found"));
         }
         if(req.body.userId == wplan.trainerId){
-            await Video.deleteMany({workOutPlanId: req.params.id});
+            deleteManyVideo(req.params.id);
             await WorkoutPlan.findByIdAndDelete(req.params.id);
             res.status(200).json("Deleted");
         }
