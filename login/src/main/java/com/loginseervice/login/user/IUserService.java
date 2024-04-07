@@ -17,5 +17,5 @@ public interface IUserService {
     void createPasswordResetTokenForUser(String email, String appUrl);
     void sendPasswordResetEmail(User user, String appUrl, String token);
     boolean resetPassword(String token, String newPassword);
-
+    void onBoardUserCDN(User user);
 }

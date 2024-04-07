@@ -12,6 +12,29 @@ const addTrainer = async (req, res, next) => {
     }
   };
 
+
+const getSubscribers = async(req, res, next) => {
+    try{
+        const trainer = await Trainer.find({userId: req.params.id});
+        const subscribers = trainer.subscribedUsers;
+        res.status(200).json(subscribers);
+    }
+    catch(err){
+        next(err);
+    }
+};
+
+const subscriberCount = async(req, res, next) => {
+    try{
+        const trainer = await Trainer.find({userId: req.params.id});
+        const subCount = trainer.subscribers;
+        res.status(200).json(subCount);
+    }
+    catch(err){
+        next(err);
+    }
+};
+
 const update = async(req, res, next) => {
     if(req.params.id === req.user.id){
         try{
@@ -56,4 +79,4 @@ const getTrainer = async(req, res, next) => {
     }
 }
 
-module.exports = { addTrainer, update, deleteTrainer, getTrainer };
+module.exports = { addTrainer, update, deleteTrainer, getTrainer, getSubscribers, subscriberCount };

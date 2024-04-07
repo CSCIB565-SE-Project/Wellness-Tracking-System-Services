@@ -33,6 +33,7 @@ public class UserService implements IUserService, ITrainerService {
     private final JwtService jwtService;
     private final VerificationTokenRepository tokenRepository;
     private final PasswordResetTokenRepository passwordResetTokenRepository;
+    private final UserMongoRepository userMongoRepository;
 
     @Override
     public List<User> getUsers() {
@@ -50,6 +51,24 @@ public class UserService implements IUserService, ITrainerService {
             throw exception;
         }
     }
+
+    @Override
+    public void onBoardUserCDN(User user){
+        UserMongo userMongo = new UserMongo();
+        userMongo.setUserId(user.getId().toString());
+        userMongo.setUserEmail(user.getEmail());
+        userMongo.setUserFname(user.getFname());
+        userMongo.setUserLName(user.getLname());
+        userMongo.setUserGender(user.getGender());
+        userMongo.setUserDoB(user.getDob());
+        try{
+            userMongoRepository.save(userMongo);
+        }
+        catch(Exception exception){
+            throw exception;
+        }
+    }
+
 
     @Override
     public User registUser(RegistrationRequest request) {
@@ -71,6 +90,14 @@ public class UserService implements IUserService, ITrainerService {
         if(request.role().equals("PROFESSIONAL")){
             try{
                 registerTrainer(usr);
+            }
+            catch(Exception exception){
+                throw exception;
+            }
+        }
+        if(request.role().equals("USER")){
+            try{
+                onBoardUserCDN(usr);
             }
             catch(Exception exception){
                 throw exception;

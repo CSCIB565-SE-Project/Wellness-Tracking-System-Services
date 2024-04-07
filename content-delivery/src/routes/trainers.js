@@ -1,4 +1,4 @@
-const { update, getTrainer, addTrainer, deleteTrainer } = require('../controllers/trainer.js');
+const { update, getTrainer, addTrainer, deleteTrainer, getSubscribers, subscriberCount } = require('../controllers/trainer.js');
 const { verifyToken } =  require('../verifyToken.js');
 const express = require('express');
 const router = express.Router();
@@ -8,6 +8,10 @@ router.put("/:id", addTrainer)
 router.put("/update/:id", verifyToken, update)
 
 router.delete("/:id", verifyToken, deleteTrainer)
+
+router.put("/sub/:id", verifyToken, getSubscribers)
+
+router.put("/subc/:id", verifyToken, subscriberCount);
 
 router.get("/find/:id", getTrainer)
 
