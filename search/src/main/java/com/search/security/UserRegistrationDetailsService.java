@@ -1,13 +1,13 @@
-package com.loginseervice.login.security;
+package com.search.security;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.loginseervice.login.exception.UserIdNotFoundException;
-import com.loginseervice.login.user.User;
-import com.loginseervice.login.user.UserRepository;
+import com.search.exception.UserIdNotFoundException;
+import com.search.user.User;
+import com.search.user.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

@@ -1,4 +1,4 @@
-package com.loginseervice.login.security;
+package com.search.security;
 
 import java.security.Key;
 import java.util.Date;
@@ -64,7 +64,7 @@ public class JwtService {
                 .setClaims(claims)
                 .setSubject(userid)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+1000*60*30))
+                .setExpiration(new Date(System.currentTimeMillis()+1000*60*1))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
     }
 

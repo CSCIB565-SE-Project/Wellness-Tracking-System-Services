@@ -1,4 +1,4 @@
-package com.loginseervice.login.user;
+package com.search.user;
 
 import java.util.Optional;
 

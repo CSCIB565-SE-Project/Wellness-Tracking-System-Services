@@ -139,7 +139,7 @@ public class UserService implements IUserService, ITrainerService {
             statusMessage = "User does not exist";
         }
         if (status) {
-            String token = jwtService.GenerateToken(usr.getUsername());
+            String token = jwtService.generateToken(usr.getId());
             return new LoginResponse(statusMessage, status, usr, token);
         } else {
             // Return LoginResponse with null user and token

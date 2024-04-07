@@ -1,4 +1,4 @@
-package com.loginseervice.login.security;
+package com.dashboard.security;
 
 import java.security.Key;
 import java.util.Date;

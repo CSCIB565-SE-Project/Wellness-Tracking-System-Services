@@ -1,4 +1,4 @@
-package com.loginseervice.login.security;
+package com.search.security;
 
 import java.io.IOException;
 
