@@ -19,8 +19,8 @@ const WorkoutPlanSchema = new mongoose.Schema(
             required: true,
         },
         videoIds: {
-            type: String,
-            required: true
+            type: [String],
+            default: []
         },
         likes: {
             type: [String],

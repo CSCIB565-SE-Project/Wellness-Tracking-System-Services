@@ -3,11 +3,13 @@ const { createError } = require("../error.js");
 const Trainer = require("../models/Trainer.js");
 const User = require("../models/User.js");
 const WorkoutPlan = require("../models/WorkoutPlan.js");
+const Video = require("../models/Video.js");
 
 const addWorkoutPlan = async(req, res, next) => {
-    const newWorkoutPlan = new WorkoutPlan({ trainerId: req.user.id, ...req.body });
+    console.log(req.body);
+    const newWorkoutPlan = new WorkoutPlan({ trainerId: req.body.trainerId, ...req.body });
     try{
-        const savedWorkoutPlan = await newWorkoutPlan.save()
+        const savedWorkoutPlan = await newWorkoutPlan.save();
         res.status(200).json(savedWorkoutPlan);
     }
     catch(err){
@@ -21,7 +23,8 @@ const deleteWorkoutPlan = async(req, res, next) => {
         if(!wplan){
             return next(createError(404, "Not Found"));
         }
-        if(req.user.id === wplan.trainerId){
+        if(req.body.userId == wplan.trainerId){
+            await Video.deleteMany({workOutPlanId: req.params.id});
             await WorkoutPlan.findByIdAndDelete(req.params.id);
             res.status(200).json("Deleted");
         }
@@ -68,6 +71,17 @@ const getWorkoutPlan = async(req, res, next) => {
         else{
             return next(createError(401, "Unsubscribed"));
         }       
+    }
+    catch(err){
+        next(err);
+    }
+}
+
+const fetchCreatedWorkoutPlan = async(req, res, next) => {
+    try{
+        const trainer = await Trainer.find({userId: req.params.id})
+        const list = await WorkoutPlan.find({trainerId: trainer[0].userId});
+        res.status(200).json(list.flat().sort((a,b) => b.createdAt - a.createdAt));
     }
     catch(err){
         next(err);
@@ -153,4 +167,4 @@ const dislike = async(req, res, next) => {
     }
 }
 
-module.exports = { addWorkoutPlan, deleteWorkoutPlan, updateWorkoutPlan, getWorkoutPlan, getWorkoutPlanByTrainer, parameterizedSearch, like, dislike };
+module.exports = { addWorkoutPlan, deleteWorkoutPlan, updateWorkoutPlan, getWorkoutPlan, fetchCreatedWorkoutPlan, getWorkoutPlanByTrainer, parameterizedSearch, like, dislike };

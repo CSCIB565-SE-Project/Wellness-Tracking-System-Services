@@ -6,6 +6,10 @@ const VideoSchema = new mongoose.Schema(
             type: String,
             required: true
         },
+        workOutPlanId: {
+            type: String,
+            required: true
+        },
         title: {
             type: String,
             required: true,
