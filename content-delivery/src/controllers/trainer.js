@@ -16,7 +16,10 @@ const addTrainer = async (req, res, next) => {
 const getSubscribers = async(req, res, next) => {
     try{
         const trainer = await Trainer.find({userId: req.params.id});
-        const subscribers = trainer.subscribedUsers;
+        let subscribers = trainer.subscribedUsers;
+        if(!subscribers){
+            subscribers = [];
+        }
         res.status(200).json(subscribers);
     }
     catch(err){
@@ -26,7 +29,7 @@ const getSubscribers = async(req, res, next) => {
 
 const subscriberCount = async(req, res, next) => {
     try{
-        const trainer = await Trainer.find({userId: req.params.id});
+        const trainer = await Trainer.findOne({userId: req.params.id});
         const subCount = trainer.subscribers;
         res.status(200).json(subCount);
     }

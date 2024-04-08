@@ -1,7 +1,10 @@
 const { update, getTrainer, addTrainer, deleteTrainer, getSubscribers, subscriberCount } = require('../controllers/trainer.js');
 const { verifyToken } =  require('../verifyToken.js');
 const express = require('express');
+const cors = require('cors');
 const router = express.Router();
+
+router.use(cors());
 
 router.put("/:id", addTrainer)
 

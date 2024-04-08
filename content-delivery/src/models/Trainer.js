@@ -14,7 +14,8 @@ const TrainerSchema = new mongoose.Schema(
             default: 0
         },
         subscribedUsers: {
-            type: [String]
+            type: [String],
+            default: []
         }
     }
 );
