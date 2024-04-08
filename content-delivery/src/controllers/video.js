@@ -233,6 +233,16 @@ const parameterizedSearch = async (req, res, next) => {
     }
 }
 
+const getUnapprovedContent = async(req, res, next) => {
+    try{
+        const videos = await Video.find({trainerId: req.params.id, isApproved: false});
+        res.status(200).json(videos);
+    }
+    catch(err){
+        next(err);
+    }
+}
+
 
 const like = async(req, res, next) => {
     const id = req.user.id;
@@ -264,4 +274,4 @@ const dislike = async(req, res, next) => {
     }
 }
 
-module.exports = { addVideo, deleteVideo, deleteManyVideo, updateVideo, getVideo, getByTag, addView, random, trend, sub, search, parameterizedSearch, like, dislike };
+module.exports = { addVideo, deleteVideo, deleteManyVideo, updateVideo, getVideo, getByTag, addView, random, trend, sub, search, parameterizedSearch, like, dislike, getUnapprovedContent };
