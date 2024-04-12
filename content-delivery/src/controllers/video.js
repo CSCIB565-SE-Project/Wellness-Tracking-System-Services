@@ -7,7 +7,7 @@ const User = require("../models/User.js");
 const { deleteVideoFromBlob } = require("../utils/deleteBlob.js");
 
 const addVideo = async(req, res, next) => {
-    const newVideo = new Video({ trainerId: req.user.id, ...req.body });
+    const newVideo = new Video({ trainerId: req.body.trainerId, ...req.body });
     try{
         const savedVideo = await newVideo.save()
         const updatedWorkoutPlan = await WorkoutPlan.findByIdAndUpdate(req.query.workoutPlanId, {
@@ -18,6 +18,7 @@ const addVideo = async(req, res, next) => {
         res.status(200).json(savedVideo);
     }
     catch(err){
+        console.log(err);
         next(err);
     }
 }
@@ -185,6 +186,15 @@ const getByTag = async (req, res, next) => {
     }
 }
 
+const getByWorkout = async(req, res, next) => {
+    try{
+        const videos = await Video.find({ workoutPlanId: req.params.id });
+        res.status(200).json(videos);
+    } catch(err) {
+        next(err);
+    }
+}
+
 const search = async(req, res, next) => {
     const query = req.query.q;
     try{
@@ -274,4 +284,4 @@ const dislike = async(req, res, next) => {
     }
 }
 
-module.exports = { addVideo, deleteVideo, deleteManyVideo, updateVideo, getVideo, getByTag, addView, random, trend, sub, search, parameterizedSearch, like, dislike, getUnapprovedContent };
+module.exports = { addVideo, deleteVideo, deleteManyVideo, updateVideo, getVideo, getByTag, addView, random, trend, sub, search, parameterizedSearch, like, dislike, getUnapprovedContent, getByWorkout };

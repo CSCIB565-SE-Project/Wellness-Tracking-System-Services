@@ -60,6 +60,16 @@ const updateWorkoutPlan = async(req, res, next) => {
     }
 }
 
+const viewWorkoutPlan = async(req, res, next) => {
+    try{
+        const wplan = await WorkoutPlan.findById(req.params.id);
+        res.status(200).json(wplan);
+    }
+    catch(err){
+        return next(createError(401, "Unauthorized"));
+    }
+}
+
 const getWorkoutPlan = async(req, res, next) => {
     try{
         const wplan = await WorkoutPlan.findById(req.params.id);
@@ -167,4 +177,4 @@ const dislike = async(req, res, next) => {
     }
 }
 
-module.exports = { addWorkoutPlan, deleteWorkoutPlan, updateWorkoutPlan, getWorkoutPlan, fetchCreatedWorkoutPlan, getWorkoutPlanByTrainer, parameterizedSearch, like, dislike };
+module.exports = { addWorkoutPlan, deleteWorkoutPlan, updateWorkoutPlan, getWorkoutPlan, fetchCreatedWorkoutPlan, getWorkoutPlanByTrainer, parameterizedSearch, like, dislike, viewWorkoutPlan };
