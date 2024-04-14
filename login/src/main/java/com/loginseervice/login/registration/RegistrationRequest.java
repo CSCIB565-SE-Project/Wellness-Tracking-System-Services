@@ -1,6 +1,7 @@
 package com.loginseervice.login.registration;
 
 import java.util.Date;
+import java.util.List;
 
 public record RegistrationRequest(
     String fname,
@@ -11,7 +12,8 @@ public record RegistrationRequest(
     String username,
     String email,
     String password,
-    String role) {
+    String role,
+    List<String> skills) {
 
     public RegistrationRequest(String fname,
                                String mname,
@@ -21,7 +23,8 @@ public record RegistrationRequest(
                                String username,
                                String email,
                                String password,
-                               String role) {
+                               String role,
+                               List<String> skills) {
         this.fname = fname;
         this.mname = mname;
         this.lname = lname;
@@ -31,21 +34,22 @@ public record RegistrationRequest(
         this.email = email;
         this.password = password;
         this.role = role;
+        this.skills = skills;
     }
 
     public RegistrationRequest setEmail(String email) {
-        return new RegistrationRequest(fname, mname, lname, dob, gender, username, email, password, role);
+        return new RegistrationRequest(fname, mname, lname, dob, gender, username, email, password, role, skills);
     }
 
     // Method to set name
     public RegistrationRequest setName(String name) {
         String[] parts = name.split("\\s+");
         if (parts.length == 3) {
-            return new RegistrationRequest(parts[0], parts[1], parts[2], dob, gender, username, email, password, role);
+            return new RegistrationRequest(parts[0], parts[1], parts[2], dob, gender, username, email, password, role, skills);
         } else if (parts.length == 2) {
-            return new RegistrationRequest(parts[0], "", parts[1], dob, gender, username, email, password, role);
+            return new RegistrationRequest(parts[0], "", parts[1], dob, gender, username, email, password, role, skills);
         } else {
-            return new RegistrationRequest(name, "", "", dob, gender, username, email, password, role);
+            return new RegistrationRequest(name, "", "", dob, gender, username, email, password, role, skills);
         }
     }
 }

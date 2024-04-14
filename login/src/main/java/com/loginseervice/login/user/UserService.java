@@ -41,9 +41,15 @@ public class UserService implements IUserService, ITrainerService {
     }
 
     @Override
-    public void registerTrainer(User user){
+    public List<Trainer> getTrainers(String skillTag){
+        return trainerRepository.findBySkillsContaining(skillTag);
+    }
+
+    @Override
+    public void registerTrainer(User user, List<String> skills){
         Trainer trainer = new Trainer();
         trainer.setUserId(user.getId().toString());
+        trainer.setSkills(skills);
         String urlforLive = "live-streaming-service.azurewebsites.net/channel/create/" + user.getEmail();
         String response = HttpClientUtil.getResponseAsString(urlforLive);
         try{
@@ -91,7 +97,7 @@ public class UserService implements IUserService, ITrainerService {
         User usr = userRepository.save(newUser);
         if(request.role().equals("PROFESSIONAL")){
             try{
-                registerTrainer(usr);
+                registerTrainer(usr, request.skills());
             }
             catch(Exception exception){
                 throw exception;
