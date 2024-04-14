@@ -188,7 +188,7 @@ const getByTag = async (req, res, next) => {
 
 const getByWorkout = async(req, res, next) => {
     try{
-        const videos = await Video.find({ workoutPlanId: req.params.id });
+        const videos = await Video.find({ workOutPlanId: req.params.id });
         res.status(200).json(videos);
     } catch(err) {
         next(err);
