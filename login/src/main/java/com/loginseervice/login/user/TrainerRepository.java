@@ -7,5 +7,5 @@ import java.util.List;
 public interface TrainerRepository extends MongoRepository<Trainer, String>{
     Optional<Trainer> findById(Integer id);
     void deleteById(String id);
-    List<Trainer> findBySkillsContaining(String skillTag);
+    List<Trainer> findBySkillsContains(String skillTag);
 }

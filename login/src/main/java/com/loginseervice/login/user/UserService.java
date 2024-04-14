@@ -42,7 +42,7 @@ public class UserService implements IUserService, ITrainerService {
 
     @Override
     public List<Trainer> getTrainers(String skillTag){
-        return trainerRepository.findBySkillsContaining(skillTag);
+        return trainerRepository.findBySkillsContains(skillTag);
     }
 
     @Override
