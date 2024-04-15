@@ -1,4 +1,4 @@
-const { addVideo, addView, deleteVideo, getByTag, parameterizedSearch, getVideo, random, search, sub, trend, updateVideo, like, dislike, getUnapprovedContent, getByWorkout } = require('../controllers/video');
+const { addVideo, addView, deleteVideo, getByTag, parameterizedSearch, getVideo, random, search, sub, trend, updateVideo, like, dislike, getUnapprovedContent, getByWorkout, getVideoForTrainer } = require('../controllers/video');
 const { streamVideo } = require('../utils/stream');
 const { verifyToken } = require('../verifyToken');
 const cors = require('cors');
@@ -13,6 +13,7 @@ router.get("/find/:id", verifyToken, getVideo);
 router.get("/play", streamVideo);
 router.put("/view/:id", verifyToken, addView);
 router.get("/trend", verifyToken, trend);
+router.get("/trainer/get/:id", verifyToken, getVideoForTrainer);
 router.put("/random", verifyToken, random);
 router.put("/sub", verifyToken, sub);
 router.put("/tags", verifyToken, getByTag);

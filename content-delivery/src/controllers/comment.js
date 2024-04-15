@@ -2,7 +2,7 @@ const { createError } = require("../error");
 const Comment = require("../models/Comment.js");
 const Video = require("../models/Video.js");
 const addComment = async(req, res, next) => {
-    const newComment = new Comment({...req.body, userId: req.user.id});
+    const newComment = new Comment({...req.body, userId: req.headers.id});
     try{
         const savedComment = await newComment.save();
         res.status(200).send(savedComment);

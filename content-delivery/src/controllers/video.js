@@ -96,6 +96,25 @@ const updateVideo = async(req, res, next) => {
     }
 }
 
+const getVideoForTrainer = async(req, res, next) => {
+    try{
+        const video = await Video.findById(req.params.id);
+        if(!video){
+            return next(createError(404, "Not Found"));
+        }
+        if(req.headers.id === video.trainerId){
+            res.status(200).json(video);
+        }
+        else{
+            return next(createError(401, "Unsubscribed"));
+        }
+        
+    }
+    catch(err){
+        next(err);
+    }
+}
+
 const getVideo = async(req, res, next) => {
     try{
         const video = await Video.findById(req.params.id);
@@ -188,7 +207,7 @@ const getByTag = async (req, res, next) => {
 
 const getByWorkout = async(req, res, next) => {
     try{
-        const videos = await Video.find({ workoutPlanId: req.params.id });
+        const videos = await Video.find({ workOutPlanId: req.params.id });
         res.status(200).json(videos);
     } catch(err) {
         next(err);
@@ -255,7 +274,7 @@ const getUnapprovedContent = async(req, res, next) => {
 
 
 const like = async(req, res, next) => {
-    const id = req.user.id;
+    const id = req.headers.id;
     const videoId = req.params.videoId;
     try{
         await Video.findByIdAndUpdate(videoId, {
@@ -284,4 +303,4 @@ const dislike = async(req, res, next) => {
     }
 }
 
-module.exports = { addVideo, deleteVideo, deleteManyVideo, updateVideo, getVideo, getByTag, addView, random, trend, sub, search, parameterizedSearch, like, dislike, getUnapprovedContent, getByWorkout };
+module.exports = { addVideo, deleteVideo, deleteManyVideo, updateVideo, getVideo, getByTag, addView, random, trend, sub, search, parameterizedSearch, like, dislike, getUnapprovedContent, getByWorkout, getVideoForTrainer };

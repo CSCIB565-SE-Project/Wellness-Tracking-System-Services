@@ -32,17 +32,20 @@ public class JwtAuthFilter extends GenericFilterBean { // Extend GenericFilterBe
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         final String authorizationHeader = request.getHeader("Authorization");
-        String username = null;
+        Integer userId = null;
         String jwt = null;
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
-            username = jwtService.extractUsername(jwt);
+            userId = Integer.parseInt(jwtService.extractId(jwt));
         }
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-            if (jwtService.validateToken(jwt, userDetails)) {
+        if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            // Validate token with user ID instead of username
+            if (jwtService.validateToken(jwt, userId)) {
+                // Load user details by user ID
+                UserDetails userDetails = this.userDetailsService.loadUserById(userId);
+
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

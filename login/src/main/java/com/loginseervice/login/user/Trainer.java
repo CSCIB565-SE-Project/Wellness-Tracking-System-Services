@@ -20,4 +20,5 @@ public class Trainer {
     private String img;
     private int subscribers;
     private List<String> subscribedUsers;
+    private List<String> skills;
 }
