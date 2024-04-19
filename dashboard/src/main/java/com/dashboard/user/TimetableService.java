@@ -48,16 +48,19 @@ public class TimetableService implements ITimetableService {
 
     public Timetable createTimetableForUser(Integer userId, Timetable timetable) {
         Optional<User> userOptional = userRepository.findById(userId);
-        User user = userOptional.get();
-        timetable.setUser(user);
-        return timetableRepository.save(timetable);
+        if (userOptional.isPresent()) {
+            timetable.setUserId(userId); // Set the userId directly
+            return timetableRepository.save(timetable);
+        } else {
+            throw new RuntimeException("User not found with id: " + userId);
+        }
     }
+    
 
     public boolean doesTimetableBelongToUser(Integer userId, Integer timetableId) {
         Optional<Timetable> timetableOptional = timetableRepository.findById(timetableId);
         return timetableOptional.map((Timetable timetable) -> timetable.getUserId().equals(userId)).orElse(false);
-    }
-    
+    }     
 
     public void deleteTimetable(Integer id) {
         timetableRepository.deleteById(id);

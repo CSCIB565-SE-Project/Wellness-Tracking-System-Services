@@ -36,4 +36,9 @@ public class User {
     private boolean isEnabled = false;
     private String specialty;
     private String location;
+
+    public Integer getId()
+    {
+        return id;
+    }
 }
