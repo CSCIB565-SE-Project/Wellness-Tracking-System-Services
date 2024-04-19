@@ -53,4 +53,12 @@ public class Timetable {
     public void setSleepCycle(String sleepCycle) {
         this.sleepCycle = sleepCycle;
     }
+
+    public Integer getUserId() {
+            return user.getId();
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

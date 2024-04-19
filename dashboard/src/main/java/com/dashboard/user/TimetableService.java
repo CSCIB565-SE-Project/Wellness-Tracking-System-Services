@@ -3,7 +3,6 @@ package com.dashboard.user;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -12,8 +11,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TimetableService implements ITimetableService {
 
-    @Autowired
     private final TimetableRepository timetableRepository;
+    private final UserRepository userRepository;
+    
 
     public List<Timetable> getAllTimetables() {
         return timetableRepository.findAll();
@@ -41,6 +41,23 @@ public class TimetableService implements ITimetableService {
             throw new RuntimeException("Timetable not found with id: " + id);
         }
     }
+
+    public List<Timetable> getTimetablesByUserId(Integer userId) {
+        return timetableRepository.findByUserId(userId);
+    }
+
+    public Timetable createTimetableForUser(Integer userId, Timetable timetable) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        User user = userOptional.get();
+        timetable.setUser(user);
+        return timetableRepository.save(timetable);
+    }
+
+    public boolean doesTimetableBelongToUser(Integer userId, Integer timetableId) {
+        Optional<Timetable> timetableOptional = timetableRepository.findById(timetableId);
+        return timetableOptional.map((Timetable timetable) -> timetable.getUserId().equals(userId)).orElse(false);
+    }
+    
 
     public void deleteTimetable(Integer id) {
         timetableRepository.deleteById(id);
