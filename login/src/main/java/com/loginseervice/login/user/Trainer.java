@@ -21,7 +21,7 @@ public class Trainer {
     private String img;
     private String speciality;
     private String location;
-    private String gender;    
+    private String gender;
     private int subscribers;
     private List<String> subscribedUsers;
     private List<String> skills;
