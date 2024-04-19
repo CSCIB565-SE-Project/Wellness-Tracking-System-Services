@@ -63,7 +63,7 @@ public class TimetableController {
         return ResponseEntity.ok(timetable);
     }
     
-    @DeleteMapping("/{userId}/{timetableId}")
+    @DeleteMapping("delete/{userId}/{timetableId}")
     public ResponseEntity<Void> deleteTimetable(@PathVariable Integer userId, @PathVariable Integer timetableId) {
         // Check if the timetable belongs to the user
         if (!timetableService.doesTimetableBelongToUser(userId, timetableId)) {
