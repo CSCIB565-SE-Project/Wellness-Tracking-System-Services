@@ -233,4 +233,8 @@ public class UserService implements IUserService, ITrainerService {
         passwordResetTokenRepository.delete(resetToken);
         return true;
     }
+
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
 }

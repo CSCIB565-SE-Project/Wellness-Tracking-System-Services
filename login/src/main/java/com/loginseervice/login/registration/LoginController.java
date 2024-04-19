@@ -1,5 +1,7 @@
 package com.loginseervice.login.registration;
 
+import java.util.logging.Logger;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -24,6 +26,8 @@ import lombok.RequiredArgsConstructor;
 public class LoginController {
 
     private final UserService userService;
+
+    private static final Logger logger = Logger.getLogger(LoginController.class.getName());
     
     @PostMapping
     public ResponseEntity<?> loginEmployee(@RequestBody LoginRequest loginRequest){
@@ -47,13 +51,19 @@ public class LoginController {
         if (authentication != null && authentication.isAuthenticated()) {
             OAuth2User oauth2User = authentication.getPrincipal();
             String email = oauth2User.getAttribute("email");
-            String name = oauth2User.getAttribute("name");
-            // Proceed with login or registration using OAuth details
-            return ResponseEntity.ok("Logged in via Google OAuth with email: " + email);
+            // Check if the user exists in the database
+            if (userService.existsByEmail(email)) {
+                // Redirect to the login page with a message indicating the user already exists
+                return ResponseEntity.status(HttpStatus.FOUND).body("redirect:/login?message=User already exists");
+            } else {
+                // Redirect to the registration page with the email pre-populated
+                return ResponseEntity.status(HttpStatus.FOUND).body("redirect:/register?email=" + email);
+            }
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Google OAuth authentication failed");
         }
     }
+
 
     @GetMapping("/oauth2/facebook")
     public ResponseEntity<String> initiateFacebookOAuth2Flow() {
@@ -71,6 +81,8 @@ public class LoginController {
             OAuth2User oauth2User = authentication.getPrincipal();
             String email = oauth2User.getAttribute("email");
             String name = oauth2User.getAttribute("name");
+
+            logger.info("OAuth2 authentication token: " + authentication.toString());
             // Proceed with login or registration using OAuth details
             return ResponseEntity.ok("Logged in via Facebook OAuth with email: " + email);
         } else {

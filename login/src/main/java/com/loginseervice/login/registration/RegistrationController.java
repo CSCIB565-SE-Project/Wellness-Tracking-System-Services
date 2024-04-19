@@ -2,10 +2,7 @@ package com.loginseervice.login.registration;
 
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,12 +32,11 @@ public class RegistrationController {
 
     @PostMapping
     public ResponseEntity<?> registerUser(@RequestBody RegistrationRequest registrationRequest, final HttpServletRequest request) {
-        try{
+        try {
             User user = userService.registUser(registrationRequest);
             publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(request)));
             return ResponseEntity.ok("Success!! Please check your email");
-        }
-        catch(Exception exception){
+        } catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception);
         }
     }
@@ -56,42 +52,6 @@ public class RegistrationController {
             return "Email Verified Succesfully!! Proceed with Login!";
         }
         return "Invalid Verification Token";
-    }
-
-    @PostMapping("/oauth2/google")
-    public ResponseEntity<String> registerWithGoogle(@RequestBody RegistrationRequest registrationRequest, OAuth2AuthenticationToken authenticationToken, HttpServletRequest request) {
-        if (authenticationToken != null && authenticationToken.isAuthenticated()) {
-            OAuth2User oauth2User = authenticationToken.getPrincipal();
-            String email = oauth2User.getAttribute("email");
-            String name = oauth2User.getAttribute("name");
-
-            registrationRequest.setEmail(email);
-            registrationRequest.setName(name);
-
-            User user = userService.registUser(registrationRequest);
-            publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(request)));
-
-            return ResponseEntity.ok("Registered successfully with Google OAuth2");
-        }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Google OAuth2 registration failed");
-    }
-
-    @PostMapping("/oauth2/facebook")
-    public ResponseEntity<String> registerWithFacebook(@RequestBody RegistrationRequest registrationRequest, OAuth2AuthenticationToken authenticationToken, HttpServletRequest request) {
-        if (authenticationToken != null && authenticationToken.isAuthenticated()) {
-            OAuth2User oauth2User = authenticationToken.getPrincipal();
-            String email = oauth2User.getAttribute("email");
-            String name = oauth2User.getAttribute("name");
-
-            registrationRequest.setEmail(email);
-            registrationRequest.setName(name);
-
-            User user = userService.registUser(registrationRequest);
-            publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(request)));
-
-            return ResponseEntity.ok("Registered successfully with Facebook OAuth2");
-        }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Facebook OAuth2 registration failed");
     }
 
     public String applicationUrl(HttpServletRequest request) {
