@@ -1,5 +1,4 @@
 var express = require('express');
-const cors = require('cors');
 var authRouter = require('./routes/auth');
 var requestRouter = require('./routes/request');
 var app = express();
