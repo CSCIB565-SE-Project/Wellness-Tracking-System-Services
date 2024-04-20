@@ -37,6 +37,9 @@ public class RegistrationController {
     public ResponseEntity<?> registerUser(@RequestBody RegistrationRequest registrationRequest, final HttpServletRequest request) {
         try{
             User user = userService.registUser(registrationRequest);
+            if(registrationRequest.isOAuth()){
+                return ResponseEntity.ok("Registration Successful! Please login");
+            }
             publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(request)));
             return ResponseEntity.ok("Success!! Please check your email");
         }
@@ -56,42 +59,6 @@ public class RegistrationController {
             return "Email Verified Succesfully!! Proceed with Login!";
         }
         return "Invalid Verification Token";
-    }
-
-    @PostMapping("/oauth2/google")
-    public ResponseEntity<String> registerWithGoogle(@RequestBody RegistrationRequest registrationRequest, OAuth2AuthenticationToken authenticationToken, HttpServletRequest request) {
-        if (authenticationToken != null && authenticationToken.isAuthenticated()) {
-            OAuth2User oauth2User = authenticationToken.getPrincipal();
-            String email = oauth2User.getAttribute("email");
-            String name = oauth2User.getAttribute("name");
-
-            registrationRequest.setEmail(email);
-            registrationRequest.setName(name);
-
-            User user = userService.registUser(registrationRequest);
-            publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(request)));
-
-            return ResponseEntity.ok("Registered successfully with Google OAuth2");
-        }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Google OAuth2 registration failed");
-    }
-
-    @PostMapping("/oauth2/facebook")
-    public ResponseEntity<String> registerWithFacebook(@RequestBody RegistrationRequest registrationRequest, OAuth2AuthenticationToken authenticationToken, HttpServletRequest request) {
-        if (authenticationToken != null && authenticationToken.isAuthenticated()) {
-            OAuth2User oauth2User = authenticationToken.getPrincipal();
-            String email = oauth2User.getAttribute("email");
-            String name = oauth2User.getAttribute("name");
-
-            registrationRequest.setEmail(email);
-            registrationRequest.setName(name);
-
-            User user = userService.registUser(registrationRequest);
-            publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(request)));
-
-            return ResponseEntity.ok("Registered successfully with Facebook OAuth2");
-        }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Facebook OAuth2 registration failed");
     }
 
     public String applicationUrl(HttpServletRequest request) {
