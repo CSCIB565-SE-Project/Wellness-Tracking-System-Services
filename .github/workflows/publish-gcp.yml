@@ -1,59 +1,70 @@
-name: Java CI for Login Service
+name: Combined Java CI/CD for Login and OAuth Services
 
 env:
-  AZURE_WEBAPP_NAME: login-service
+  AZURE_WEBAPP_LOGIN_NAME: login-service
+  AZURE_WEBAPP_OAUTH_NAME: oauth-service
 
 on:
-    push:
-        branches:
-            - 'main'
-        paths:
-            - 'login/**'
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'login/**'
+      - 'oauth2login/**'
 
 permissions:
-    contents: 'read'
-    packages: 'write'
+  contents: 'read'
+  packages: 'write'
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        
-        steps:
-            - uses: actions/checkout@v4
-        
-            - name: Set up Docker Buildx
-              uses: docker/setup-buildx-action@v2
-        
-            - name: Log in to GitHub container registry
-              uses: docker/login-action@v2
-              with:
-                registry: ghcr.io
-                username: ${{ github.actor }}
-                password: ${{ secrets.GITHUB_TOKEN }}
-        
-            - name: Lowercase the repo name
-              run: echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
-        
-            - name: Build and push container image to registry
-              uses: docker/build-push-action@v4
-              with:
-                  push: true
-                  tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
-                  file: ./login/Dockerfile
-        
-    deploy:
-        runs-on: ubuntu-latest
-        
-        needs: build
-        
-        steps:
-            - name: Lowercase the repo name
-              run: echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
-        
-            - name: Deploy to Azure Web App
-              id: deploy-to-webapp
-              uses: azure/webapps-deploy@85270a1854658d167ab239bce43949edb336fa7c
-              with:
-                  app-name: ${{ env.AZURE_WEBAPP_NAME }}
-                  publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-                  images: 'ghcr.io/${{ env.REPO }}:${{ github.sha }}'
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to GitHub container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Lowercase the repo name
+        run: echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
+
+      - name: Build and push container image for Login service
+        if: startsWith(github.event_path, 'login/')
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          tags: ghcr.io/${{ env.REPO }}/login-service:${{ github.sha }}
+          file: ./login/Dockerfile
+
+      - name: Deploy Login service to Azure Web App
+        id: deploy-login-to-webapp
+        uses: azure/webapps-deploy@85270a1854658d167ab239bce43949edb336fa7c
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_LOGIN_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          images: 'ghcr.io/${{ env.REPO }}/login-service:${{ github.sha }}'
+
+      - name: Build and push container image for OAuth service
+        if: startsWith(github.event_path, 'oauth2login/')
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          tags: ghcr.io/${{ env.REPO }}/oauth-service:${{ github.sha }}
+          file: ./oauth2login/Dockerfile
+
+      - name: Deploy OAuth service to Azure Web App
+        id: deploy-oauth-to-webapp
+        uses: azure/webapps-deploy@85270a1854658d167ab239bce43949edb336fa7c
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_OAUTH_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          images: 'ghcr.io/${{ env.REPO }}/oauth-service:${{ github.sha }}'
