@@ -10,7 +10,7 @@ on:
       - 'main'
     paths:
       - 'login/**'
-      - 'oauth2login/**'
+      - 'oauthlogin/**'
 
 permissions:
   contents: 'read'
@@ -54,12 +54,12 @@ jobs:
           images: 'ghcr.io/${{ env.REPO }}/login-service:${{ github.sha }}'
 
       - name: Build and push container image for OAuth service
-        if: startsWith(github.event_path, 'oauth2login/')
+        if: startsWith(github.event_path, 'oauthlogin/')
         uses: docker/build-push-action@v4
         with:
           push: true
           tags: ghcr.io/${{ env.REPO }}/oauth-service:${{ github.sha }}
-          file: ./oauth2login/Dockerfile
+          file: ./oauthlogin/Dockerfile
 
       - name: Deploy OAuth service to Azure Web App
         id: deploy-oauth-to-webapp
