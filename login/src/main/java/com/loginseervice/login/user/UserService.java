@@ -85,15 +85,29 @@ public class UserService implements IUserService, ITrainerService {
             throw new UserAlreadyExistsException("User with Email " + request.email() + " already exists!!");
         }
         var newUser = new User();
-        newUser.setFname(request.fname());
-        newUser.setMname(request.mname());
-        newUser.setLname(request.lname());
-        newUser.setDob(request.dob());
-        newUser.setGender(request.gender());
-        newUser.setEmail(request.email());
-        newUser.setUsername(request.username());
-        newUser.setPassword(passwordEncoder.encode(request.password()));
-        newUser.setRole(request.role());
+        if(request.isOAuth()){
+            newUser.setFname(request.fname());
+            newUser.setMname(request.mname());
+            newUser.setLname(request.lname());
+            newUser.setDob(request.dob());
+            newUser.setGender(request.gender());
+            newUser.setEmail(request.email());
+            newUser.setUsername(request.username());
+            newUser.setRole(request.role());
+            newUser.setOAuth(true);
+            newUser.setEnabled(true);
+        }
+        else{
+            newUser.setFname(request.fname());
+            newUser.setMname(request.mname());
+            newUser.setLname(request.lname());
+            newUser.setDob(request.dob());
+            newUser.setGender(request.gender());
+            newUser.setEmail(request.email());
+            newUser.setUsername(request.username());
+            newUser.setPassword(passwordEncoder.encode(request.password()));
+            newUser.setRole(request.role());
+        }
         User usr = userRepository.save(newUser);
         if(request.role().equals("PROFESSIONAL")){
             try{
@@ -160,7 +174,7 @@ public class UserService implements IUserService, ITrainerService {
                 String password = request.password();
                 String encodedPassword = this.getPasswordEmail(user);
                 Boolean isPwdMatch = passwordEncoder.matches(password, encodedPassword);
-                if (isPwdMatch) {
+                if (isPwdMatch || request.isOAuth()) {
                     usr = user.get();
                     status = true;
                     statusMessage = "Login Success";

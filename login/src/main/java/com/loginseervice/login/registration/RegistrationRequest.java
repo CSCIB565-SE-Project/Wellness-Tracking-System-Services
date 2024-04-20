@@ -13,7 +13,8 @@ public record RegistrationRequest(
     String email,
     String password,
     String role,
-    List<String> skills) {
+    List<String> skills,
+    Boolean isOAuth) {
 
     public RegistrationRequest(String fname,
                                String mname,
@@ -24,7 +25,8 @@ public record RegistrationRequest(
                                String email,
                                String password,
                                String role,
-                               List<String> skills) {
+                               List<String> skills,
+                               Boolean isOAuth) {
         this.fname = fname;
         this.mname = mname;
         this.lname = lname;
@@ -35,21 +37,22 @@ public record RegistrationRequest(
         this.password = password;
         this.role = role;
         this.skills = skills;
+        this.isOAuth = isOAuth;
     }
 
     public RegistrationRequest setEmail(String email) {
-        return new RegistrationRequest(fname, mname, lname, dob, gender, username, email, password, role, skills);
+        return new RegistrationRequest(fname, mname, lname, dob, gender, username, email, password, role, skills, isOAuth);
     }
 
     // Method to set name
     public RegistrationRequest setName(String name) {
         String[] parts = name.split("\\s+");
         if (parts.length == 3) {
-            return new RegistrationRequest(parts[0], parts[1], parts[2], dob, gender, username, email, password, role, skills);
+            return new RegistrationRequest(parts[0], parts[1], parts[2], dob, gender, username, email, password, role, skills, isOAuth);
         } else if (parts.length == 2) {
-            return new RegistrationRequest(parts[0], "", parts[1], dob, gender, username, email, password, role, skills);
+            return new RegistrationRequest(parts[0], "", parts[1], dob, gender, username, email, password, role, skills, isOAuth);
         } else {
-            return new RegistrationRequest(name, "", "", dob, gender, username, email, password, role, skills);
+            return new RegistrationRequest(name, "", "", dob, gender, username, email, password, role, skills, isOAuth);
         }
     }
 }

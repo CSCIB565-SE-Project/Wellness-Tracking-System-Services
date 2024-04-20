@@ -34,6 +34,9 @@ public class RegistrationController {
     public ResponseEntity<?> registerUser(@RequestBody RegistrationRequest registrationRequest, final HttpServletRequest request) {
         try {
             User user = userService.registUser(registrationRequest);
+            if(registrationRequest.isOAuth()){
+                return ResponseEntity.ok("Registration Successful! Please login");
+            }
             publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(request)));
             return ResponseEntity.ok("Success!! Please check your email");
         } catch (Exception exception) {
