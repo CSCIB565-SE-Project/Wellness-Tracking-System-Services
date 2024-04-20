@@ -12,24 +12,26 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer professionalId;
+    private String trainerId;
     private Integer userId;
     private Date date;
 
-    public Date getDate() {
-        return date;
+    // Getters and Setters
+
+    public Integer getId() {
+        return id;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getProfessionalId() {
-        return professionalId;
+    public String getTrainerId() {
+        return trainerId;
     }
 
-    public void setProfessionalId(Integer professionalId) {
-        this.professionalId = professionalId;
+    public void setTrainerId(String trainerId) {
+        this.trainerId = trainerId;
     }
 
     public Integer getUserId() {
@@ -39,5 +41,12 @@ public class Appointment {
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
-}
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+}

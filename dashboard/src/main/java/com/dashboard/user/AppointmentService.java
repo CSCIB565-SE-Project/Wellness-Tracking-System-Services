@@ -3,46 +3,48 @@ package com.dashboard.user;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class AppointmentService implements IAppointmentService{
+public class AppointmentService implements IAppointmentService {
 
-    @Autowired
     private final AppointmentRepository appointmentRepository;
 
     public List<Appointment> getAllAppointments() {
         return appointmentRepository.findAll();
     }
 
-    public Optional<Appointment> getAppointmentById(Integer id) {
-        return appointmentRepository.findById(id);
+    public Optional<Appointment> getAppointmentById(Integer appointmentId) {
+        return appointmentRepository.findById(appointmentId);
+    }
+
+    public List<Appointment> getAppointmentsByTrainerId(String trainerId) {
+        return appointmentRepository.findByTrainerId(trainerId);
     }
 
     public Appointment createAppointment(Appointment appointment) {
         return appointmentRepository.save(appointment);
     }
 
-    public Appointment updateAppointment(Integer id, Appointment updatedAppointment) {
-        Optional<Appointment> appointmentOptional = appointmentRepository.findById(id);
+    public Appointment updateAppointment(Integer appointmentId, Appointment updatedAppointment) {
+        Optional<Appointment> appointmentOptional = appointmentRepository.findById(appointmentId);
         if (appointmentOptional.isPresent()) {
             Appointment appointment = appointmentOptional.get();
-            
+
             appointment.setDate(updatedAppointment.getDate());
-            appointment.setProfessionalId(updatedAppointment.getProfessionalId());
+            appointment.setTrainerId(updatedAppointment.getTrainerId());
             appointment.setUserId(updatedAppointment.getUserId());
 
             return appointmentRepository.save(appointment);
         } else {
-            throw new RuntimeException("Appointment not found with id: " + id);
+            throw new RuntimeException("Appointment not found with id: " + appointmentId);
         }
     }
 
-    public void deleteAppointment(Integer id) {
-        appointmentRepository.deleteById(id);
+    public void deleteAppointment(Integer appointmentId) {
+        appointmentRepository.deleteById(appointmentId);
     }
 }

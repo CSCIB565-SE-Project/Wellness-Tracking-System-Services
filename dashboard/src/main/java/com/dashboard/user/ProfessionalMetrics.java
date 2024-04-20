@@ -12,7 +12,7 @@ public class ProfessionalMetrics {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long professionalId;
+    private Long trainerId;
     private Long contentId;
     private int numberOfViews;
 
