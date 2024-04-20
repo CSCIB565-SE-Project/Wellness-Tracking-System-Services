@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "DashboardApplication",
+            "request": "launch",
+            "mainClass": "com.dashboard.DashboardApplication",
+            "projectName": "dashboard"
+        },
+        {
+            "type": "java",
+            "name": "SearchApplication",
+            "request": "launch",
+            "mainClass": "com.search.SearchApplication",
+            "projectName": "search"
+        },
+        {
+            "type": "java",
             "name": "AdmincontrolApplication",
             "request": "launch",
             "mainClass": "com.admincontrols.admincontrol.AdmincontrolApplication",

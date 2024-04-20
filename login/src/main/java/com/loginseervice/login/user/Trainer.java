@@ -1,7 +1,8 @@
 package com.loginseervice.login.user;
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,6 +19,9 @@ public class Trainer {
     private String id;
     private String userId;
     private String img;
+    private String speciality;
+    private String location;
+    private String gender;
     private int subscribers;
     private List<String> subscribedUsers;
     private List<String> skills;

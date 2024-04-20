@@ -2,10 +2,7 @@ package com.loginseervice.login.registration;
 
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,15 +32,14 @@ public class RegistrationController {
 
     @PostMapping
     public ResponseEntity<?> registerUser(@RequestBody RegistrationRequest registrationRequest, final HttpServletRequest request) {
-        try{
+        try {
             User user = userService.registUser(registrationRequest);
             if(registrationRequest.isOAuth()){
                 return ResponseEntity.ok("Registration Successful! Please login");
             }
             publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(request)));
             return ResponseEntity.ok("Success!! Please check your email");
-        }
-        catch(Exception exception){
+        } catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception);
         }
     }

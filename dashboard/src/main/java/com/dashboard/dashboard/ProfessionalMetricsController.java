@@ -14,7 +14,7 @@ import com.dashboard.user.ProfessionalMetrics;
 import com.dashboard.user.ProfessionalMetricsService;
 
 @RestController
-@RequestMapping("/api/professional-metrics")
+@RequestMapping("/professional-metrics")
 public class ProfessionalMetricsController {
 
     @Autowired
@@ -26,6 +26,5 @@ public class ProfessionalMetricsController {
         return new ResponseEntity<>(metrics, HttpStatus.OK);
     }
 
-    // Add other endpoints for adding, updating, or deleting metrics
 }
 

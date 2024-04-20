@@ -1,26 +1,38 @@
 package com.dashboard.user;
 
+import java.sql.Time;
 import java.util.Date;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+@Document
 public class Timetable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private ObjectId id;
 
-    @ManyToOne
-    private User user;
     
-    private Date day; 
+    private Integer userId;
+    
+    private String title;
+    private Date day;
     private String workout;
     private String meals;
     private String sleepCycle;
+    private Time startTime;
+    private Time endTime;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public Date getDay() {
         return day;
@@ -28,6 +40,22 @@ public class Timetable {
 
     public void setDay(Date day) {
         this.day = day;
+    }
+
+    public Time getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Time startTime) {
+        this.startTime = startTime;
+    }
+
+    public Time getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Time endTime) {
+        this.endTime = endTime;
     }
     
     public String getWorkout() {
@@ -52,5 +80,13 @@ public class Timetable {
 
     public void setSleepCycle(String sleepCycle) {
         this.sleepCycle = sleepCycle;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

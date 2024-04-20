@@ -43,6 +43,7 @@ public class UserRegistrationSecurityConfig {
             .authorizeHttpRequests(requests -> requests
                 .requestMatchers("/register/**").permitAll()
                 .requestMatchers("/login/**").permitAll()
+                .requestMatchers("/password-reset/**").permitAll()
                 .requestMatchers("/oauth2/google", "/oauth2/facebook").permitAll()
                 .requestMatchers("/users/**").hasAnyAuthority("USER", "ADMIN")
             )
