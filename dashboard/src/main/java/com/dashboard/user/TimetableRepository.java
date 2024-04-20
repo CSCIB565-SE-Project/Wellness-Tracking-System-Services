@@ -7,6 +7,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface TimetableRepository extends MongoRepository<Timetable, Integer> {
     Optional<Timetable> findById(String id);
-    List<Timetable> findByUserId(String userId);
+    List<Timetable> findByUserId(Integer userId);
 }
 

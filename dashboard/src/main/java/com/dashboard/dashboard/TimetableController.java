@@ -44,13 +44,13 @@ public class TimetableController {
     }
 
     @GetMapping("/getByUser")
-    public ResponseEntity<List<Timetable>> getTimetablesByUserId(@RequestParam String userId) {
+    public ResponseEntity<List<Timetable>> getTimetablesByUserId(@RequestParam Integer userId) {
         List<Timetable> timetables = timetableService.getTimetablesByUserId(userId);
         return ResponseEntity.ok(timetables);
     }
     
     @PostMapping("/createForUser")
-    public ResponseEntity<Timetable> createTimetableForUser(@RequestParam String userId, @RequestBody Timetable timetable) {
+    public ResponseEntity<Timetable> createTimetableForUser(@RequestParam Integer userId, @RequestBody Timetable timetable) {
         Timetable createdTimetable = timetableService.createTimetableForUser(userId, timetable);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTimetable);
     }
@@ -58,10 +58,6 @@ public class TimetableController {
 
     @PutMapping("/update")
     public ResponseEntity<Timetable> updateTimetable(@RequestParam Integer userId, @RequestParam Integer timetableId, @RequestBody Timetable updatedTimetable) {
-        // Check if the timetable belongs to the user
-        if (!timetableService.doesTimetableBelongToUser(userId, timetableId)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
         Timetable timetable = timetableService.updateTimetable(timetableId, updatedTimetable);
         return ResponseEntity.ok(timetable);
     }

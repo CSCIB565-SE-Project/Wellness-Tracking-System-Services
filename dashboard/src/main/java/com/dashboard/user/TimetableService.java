@@ -41,11 +41,11 @@ public class TimetableService implements ITimetableService {
         }
     }
 
-    public List<Timetable> getTimetablesByUserId(String userId) {
+    public List<Timetable> getTimetablesByUserId(Integer userId) {
         return timetableRepository.findByUserId(userId);
     }
 
-    public Timetable createTimetableForUser(String userId, Timetable timetable) {
+    public Timetable createTimetableForUser(Integer userId, Timetable timetable) {
         timetable.setUserId(userId);
         return timetableRepository.save(timetable);
     }
