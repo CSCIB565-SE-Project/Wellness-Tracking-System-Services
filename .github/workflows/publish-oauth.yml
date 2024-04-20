@@ -1,15 +1,16 @@
-name: Java CI for Login Service
+name: Nodejs CI for OAuth Service
 
 env:
-  AZURE_WEBAPP_NAME: oauth-service
+  AZURE_WEBAPP_NAME: oauthlogin-service
 
 on:
     push:
         branches:
             - 'main'
         paths:
-            - 'oauth2login/**'
-
+            - 'oauthlogin/**'
+    workflow_dispatch:
+      
 permissions:
     contents: 'read'
     packages: 'write'
@@ -39,7 +40,7 @@ jobs:
               with:
                   push: true
                   tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
-                  file: ./oauth2login/Dockerfile
+                  file: ./oauthlogin/Dockerfile
         
     deploy:
         runs-on: ubuntu-latest
@@ -55,5 +56,5 @@ jobs:
               uses: azure/webapps-deploy@85270a1854658d167ab239bce43949edb336fa7c
               with:
                   app-name: ${{ env.AZURE_WEBAPP_NAME }}
-                  publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+                  publish-profile: ${{ secrets.AZURE_WEBAPP_OAUTH_PUBLISH_PROFILE }}
                   images: 'ghcr.io/${{ env.REPO }}:${{ github.sha }}'
