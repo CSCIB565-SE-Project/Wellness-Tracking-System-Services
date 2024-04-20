@@ -3,17 +3,14 @@ package com.dashboard.user;
 import java.sql.Time;
 import java.util.Date;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import jakarta.persistence.Id;
 
 @Document
 public class Timetable {
     @Id
-    private ObjectId id;
+    private Integer id;
 
     
     private Integer userId;
