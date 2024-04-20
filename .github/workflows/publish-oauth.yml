@@ -9,7 +9,8 @@ on:
             - 'main'
         paths:
             - 'oauthlogin/**'
-
+    workflow_dispatch:
+      
 permissions:
     contents: 'read'
     packages: 'write'
