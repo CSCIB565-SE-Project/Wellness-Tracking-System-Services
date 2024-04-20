@@ -4,7 +4,6 @@ var authRouter = require('./routes/auth');
 var requestRouter = require('./routes/request');
 var app = express();
 
-app.use(cors());
 app.use('/auth', authRouter);
 app.use('/request', requestRouter);
 
