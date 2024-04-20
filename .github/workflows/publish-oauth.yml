@@ -8,7 +8,7 @@ on:
         branches:
             - 'main'
         paths:
-            - 'oauth2login/**'
+            - 'oauthlogin/**'
 
 permissions:
     contents: 'read'
@@ -39,7 +39,7 @@ jobs:
               with:
                   push: true
                   tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
-                  file: ./oauth2login/Dockerfile
+                  file: ./oauthlogin/Dockerfile
         
     deploy:
         runs-on: ubuntu-latest
