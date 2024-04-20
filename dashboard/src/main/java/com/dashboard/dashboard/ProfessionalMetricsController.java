@@ -23,8 +23,8 @@ public class ProfessionalMetricsController {
     private ProfessionalMetricsService professionalMetricsService;
 
     @GetMapping ("/get")
-    public ResponseEntity<List<ProfessionalMetrics>> getMetricsForProfessional(@RequestParam String trainerId) {
-        List<ProfessionalMetrics> metrics = professionalMetricsService.getMetricsForProfessional(trainerId);
+    public ResponseEntity<List<ProfessionalMetrics>> getMetricsForProfessional(@RequestParam String professionalId) {
+        List<ProfessionalMetrics> metrics = professionalMetricsService.getMetricsForProfessional(professionalId);
         return new ResponseEntity<>(metrics, HttpStatus.OK);
     }
 
