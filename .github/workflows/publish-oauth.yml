@@ -1,7 +1,7 @@
 name: Nodejs CI for OAuth Service
 
 env:
-  AZURE_WEBAPP_NAME: oauth-service
+  AZURE_WEBAPP_NAME: oauthlogin-service
 
 on:
     push:
