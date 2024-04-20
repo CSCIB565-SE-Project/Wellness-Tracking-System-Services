@@ -11,7 +11,7 @@ public class ProfessionalMetricsService {
     @Autowired
     private ProfessionalMetricsRepository professionalMetricsRepository;
 
-    public List<ProfessionalMetrics> getMetricsForProfessional(Long professionalId) {
+    public List<ProfessionalMetrics> getMetricsForProfessional(String professionalId) {
         return professionalMetricsRepository.findByProfessionalId(professionalId);
     }
 

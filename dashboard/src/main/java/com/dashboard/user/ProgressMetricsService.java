@@ -11,19 +11,13 @@ public class ProgressMetricsService {
     @Autowired
     private ProgressMetricsRepository progressMetricsRepository;
 
-    @Autowired
-    private UserService userService;
-
-    public List<ProgressMetrics> getAllProgressMetrics() {
-        return progressMetricsRepository.findAll();
+    public List<ProgressMetrics> getAllProgressMetrics(Integer userId) {
+        return progressMetricsRepository.findByUserId(userId); // Use userId to filter progress metrics
     }
 
-    public List<ProgressMetrics> getProgressMetricsByUserId(Integer userId) {
-        User user = userService.getUserById(userId); // Call the method using injected UserService
-        return progressMetricsRepository.findByUser(user);
-    }
-
-    public ProgressMetrics createProgressMetrics(ProgressMetrics progressMetrics) {
+    public ProgressMetrics createProgressMetrics(Integer userId, ProgressMetrics progressMetrics) {
+        // Set the userId on the progressMetrics object before saving
+        progressMetrics.setUserId(userId);
         return progressMetricsRepository.save(progressMetrics);
     }
 }

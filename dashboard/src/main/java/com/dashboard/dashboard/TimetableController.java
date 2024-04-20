@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dashboard.user.Timetable;
@@ -42,21 +43,21 @@ public class TimetableController {
         return timetable.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("get/user/{userId}")
-    public ResponseEntity<List<Timetable>> getTimetablesByUserId(@PathVariable Integer userId) {
+    @GetMapping("/getByUser")
+    public ResponseEntity<List<Timetable>> getTimetablesByUserId(@RequestParam Integer userId) {
         List<Timetable> timetables = timetableService.getTimetablesByUserId(userId);
         return ResponseEntity.ok(timetables);
     }
 
-    @PostMapping("create/user/{userId}")
-    public ResponseEntity<Timetable> createTimetableForUser(@PathVariable Integer userId, @RequestBody Timetable timetable) {
+    @PostMapping("/createForUser")
+    public ResponseEntity<Timetable> createTimetableForUser(@RequestParam Integer userId, @RequestBody Timetable timetable) {
         Timetable createdTimetable = timetableService.createTimetableForUser(userId, timetable);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTimetable);
     }
 
 
-    @PutMapping("update/{userId}/{timetableId}")
-    public ResponseEntity<Timetable> updateTimetable(@PathVariable Integer userId, @PathVariable Integer timetableId, @RequestBody Timetable updatedTimetable) {
+    @PutMapping("/update")
+    public ResponseEntity<Timetable> updateTimetable(@RequestParam Integer userId, @RequestParam Integer timetableId, @RequestBody Timetable updatedTimetable) {
         // Check if the timetable belongs to the user
         if (!timetableService.doesTimetableBelongToUser(userId, timetableId)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -65,8 +66,8 @@ public class TimetableController {
         return ResponseEntity.ok(timetable);
     }
     
-    @DeleteMapping("delete/{userId}/{timetableId}")
-    public ResponseEntity<Void> deleteTimetable(@PathVariable Integer userId, @PathVariable Integer timetableId) {
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> deleteTimetable(@RequestParam Integer userId, @RequestParam Integer timetableId) {
         // Check if the timetable belongs to the user
         if (!timetableService.doesTimetableBelongToUser(userId, timetableId)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -74,5 +75,4 @@ public class TimetableController {
         timetableService.deleteTimetable(timetableId);
         return ResponseEntity.noContent().build();
     }
-    
 }
