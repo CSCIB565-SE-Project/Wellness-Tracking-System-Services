@@ -13,7 +13,7 @@ public class Timetable {
     private Integer id;
 
     
-    private Integer userId;
+    private String userId;
     
     private String title;
     private Date day;
@@ -79,11 +79,11 @@ public class Timetable {
         this.sleepCycle = sleepCycle;
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 }

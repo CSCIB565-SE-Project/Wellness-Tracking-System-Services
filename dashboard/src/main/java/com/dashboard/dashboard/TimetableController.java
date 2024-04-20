@@ -44,14 +44,13 @@ public class TimetableController {
     }
 
     @GetMapping("/getByUser")
-    public ResponseEntity<List<Timetable>> getTimetablesByUserId(@RequestParam Integer userId) {
-        System.out.println("Received userId: " + userId); // Log the userId
+    public ResponseEntity<List<Timetable>> getTimetablesByUserId(@RequestParam String userId) {
         List<Timetable> timetables = timetableService.getTimetablesByUserId(userId);
         return ResponseEntity.ok(timetables);
     }
     
     @PostMapping("/createForUser")
-    public ResponseEntity<Timetable> createTimetableForUser(@RequestParam Integer userId, @RequestBody Timetable timetable) {
+    public ResponseEntity<Timetable> createTimetableForUser(@RequestParam String userId, @RequestBody Timetable timetable) {
         Timetable createdTimetable = timetableService.createTimetableForUser(userId, timetable);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTimetable);
     }

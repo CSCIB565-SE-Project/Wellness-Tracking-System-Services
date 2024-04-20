@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 public class TimetableService implements ITimetableService {
 
     private final TimetableRepository timetableRepository;
-    private final UserRepository userRepository;
     
 
     public List<Timetable> getAllTimetables() {
@@ -42,18 +41,13 @@ public class TimetableService implements ITimetableService {
         }
     }
 
-    public List<Timetable> getTimetablesByUserId(Integer userId) {
+    public List<Timetable> getTimetablesByUserId(String userId) {
         return timetableRepository.findByUserId(userId);
     }
 
-    public Timetable createTimetableForUser(Integer userId, Timetable timetable) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        if (userOptional.isPresent()) {
-            timetable.setUserId(userId); // Set the userId directly
-            return timetableRepository.save(timetable);
-        } else {
-            throw new RuntimeException("User not found with id: " + userId);
-        }
+    public Timetable createTimetableForUser(String userId, Timetable timetable) {
+        timetable.setUserId(userId);
+        return timetableRepository.save(timetable);
     }
     
 
