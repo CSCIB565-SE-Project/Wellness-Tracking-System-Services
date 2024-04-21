@@ -3,6 +3,7 @@ package com.dashboard.user;
 import java.util.List;
 import java.util.Optional;
 
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -48,7 +49,7 @@ public class AppointmentService implements IAppointmentService {
         }
     }
 
-    public void deleteAppointment(Integer appointmentId) {
+    public void deleteAppointment(ObjectId appointmentId) {
         appointmentRepository.deleteById(appointmentId);
     }
 }

@@ -3,6 +3,7 @@ package com.dashboard.user;
 import java.util.List;
 import java.util.Optional;
 
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ public class TimetableService implements ITimetableService {
         return timetableRepository.findAll();
     }
 
-    public Optional<Timetable> getTimetableById(Integer id) {
+    public Optional<Timetable> getTimetableById(String id) {
         return timetableRepository.findById(id);
     }
 
@@ -26,7 +27,7 @@ public class TimetableService implements ITimetableService {
         return timetableRepository.save(timetable);
     }
 
-    public Timetable updateTimetable(Integer id, Timetable updatedTimetable) {
+    public Timetable updateTimetable(String id, Timetable updatedTimetable) {
         Optional<Timetable> timetableOptional = timetableRepository.findById(id);
         if (timetableOptional.isPresent()) {
             Timetable timetable = timetableOptional.get();
@@ -51,12 +52,12 @@ public class TimetableService implements ITimetableService {
     }
     
 
-    public boolean doesTimetableBelongToUser(Integer userId, Integer timetableId) {
+    public boolean doesTimetableBelongToUser(Integer userId, String timetableId) {
         Optional<Timetable> timetableOptional = timetableRepository.findById(timetableId);
         return timetableOptional.map((Timetable timetable) -> timetable.getUserId().equals(userId)).orElse(false);
     }     
 
-    public void deleteTimetable(Integer id) {
+    public void deleteTimetable(ObjectId id) {
         timetableRepository.deleteById(id);
     }
 }
