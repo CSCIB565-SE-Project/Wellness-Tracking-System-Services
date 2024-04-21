@@ -3,6 +3,7 @@ package com.dashboard.user;
 import java.util.List;
 import java.util.Optional;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ public class WorkoutPlanService {
         return workoutPlanRepository.findAll();
     }
 
-    public Optional<WorkoutPlan> getWorkoutPlanById(Long id) {
+    public Optional<WorkoutPlan> getWorkoutPlanById(ObjectId id) {
         return workoutPlanRepository.findById(id);
     }
 
@@ -26,7 +27,7 @@ public class WorkoutPlanService {
         return workoutPlanRepository.save(workoutPlan);
     }
 
-    public void deleteWorkoutPlan(Long id) {
+    public void deleteWorkoutPlan(ObjectId id) {
         // Check if the workout plan exists
         if (!workoutPlanRepository.existsById(id)) {
             throw new NotFoundException("Workout plan not found");

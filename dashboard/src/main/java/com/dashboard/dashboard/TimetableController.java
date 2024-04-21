@@ -3,6 +3,7 @@ package com.dashboard.dashboard;
 import java.util.List;
 import java.util.Optional;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +39,7 @@ public class TimetableController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Timetable> getTimetableById(@PathVariable Integer id) {
+    public ResponseEntity<Timetable> getTimetableById(@PathVariable String id) {
         Optional<Timetable> timetable = timetableService.getTimetableById(id);
         return timetable.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -57,13 +58,13 @@ public class TimetableController {
 
 
     @PutMapping("/update")
-    public ResponseEntity<Timetable> updateTimetable(@RequestParam Integer userId, @RequestParam Integer timetableId, @RequestBody Timetable updatedTimetable) {
+    public ResponseEntity<Timetable> updateTimetable(@RequestParam Integer userId, @RequestParam String timetableId, @RequestBody Timetable updatedTimetable) {
         Timetable timetable = timetableService.updateTimetable(timetableId, updatedTimetable);
         return ResponseEntity.ok(timetable);
     }
     
     @DeleteMapping("/delete")
-    public ResponseEntity<Void> deleteTimetable(@RequestParam Integer userId, @RequestParam Integer timetableId) {
+    public ResponseEntity<Void> deleteTimetable(@RequestParam Integer userId, @RequestParam ObjectId timetableId) {
         timetableService.deleteTimetable(timetableId);
         return ResponseEntity.noContent().build();
     }

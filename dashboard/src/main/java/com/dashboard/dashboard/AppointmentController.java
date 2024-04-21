@@ -2,6 +2,7 @@ package com.dashboard.dashboard;
 
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,7 +67,7 @@ public class AppointmentController {
     }
 
     @DeleteMapping("/deleteForTrainer")
-    public ResponseEntity<Void> deleteAppointmentForTrainer(@RequestParam Integer appointmentId, @RequestParam String trainerId) {
+    public ResponseEntity<Void> deleteAppointmentForTrainer(@RequestParam ObjectId appointmentId, @RequestParam String trainerId) {
         appointmentService.deleteAppointment(appointmentId);
         return ResponseEntity.noContent().build();
     }
