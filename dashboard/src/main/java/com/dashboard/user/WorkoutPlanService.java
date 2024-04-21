@@ -26,15 +26,6 @@ public class WorkoutPlanService {
         return workoutPlanRepository.save(workoutPlan);
     }
 
-    public WorkoutPlan updateWorkoutPlan(Long id, WorkoutPlan updatedWorkoutPlan) {
-        // Check if the workout plan exists
-        if (!workoutPlanRepository.existsById(id)) {
-            throw new NotFoundException("Workout plan not found");
-        }
-        updatedWorkoutPlan.setId(id); // Ensure the ID is set
-        return workoutPlanRepository.save(updatedWorkoutPlan);
-    }
-
     public void deleteWorkoutPlan(Long id) {
         // Check if the workout plan exists
         if (!workoutPlanRepository.existsById(id)) {

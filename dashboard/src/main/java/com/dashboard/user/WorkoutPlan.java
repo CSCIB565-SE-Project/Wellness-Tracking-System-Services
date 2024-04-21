@@ -2,17 +2,16 @@ package com.dashboard.user;
 
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import jakarta.persistence.Id;
 
-@Entity
+@Document
 public class WorkoutPlan {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private ObjectId id;
 
     private String trainerId;
 
@@ -28,7 +27,4 @@ public class WorkoutPlan {
 
     private List<String> dislikes;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

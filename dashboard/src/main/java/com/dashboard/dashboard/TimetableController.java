@@ -64,10 +64,6 @@ public class TimetableController {
     
     @DeleteMapping("/delete")
     public ResponseEntity<Void> deleteTimetable(@RequestParam Integer userId, @RequestParam Integer timetableId) {
-        // Check if the timetable belongs to the user
-        if (!timetableService.doesTimetableBelongToUser(userId, timetableId)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
         timetableService.deleteTimetable(timetableId);
         return ResponseEntity.noContent().build();
     }
