@@ -1,4 +1,5 @@
 package com.loginseervice.login.user;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
@@ -23,6 +24,6 @@ public class Trainer {
     private String location;
     private String gender;
     private int subscribers;
-    private List<String> subscribedUsers;
+    private List<String> subscribedUsers = new ArrayList<>();;
     private List<String> skills;
 }

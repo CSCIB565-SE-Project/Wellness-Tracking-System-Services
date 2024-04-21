@@ -50,8 +50,9 @@ public class UserService implements IUserService, ITrainerService {
         Trainer trainer = new Trainer();
         trainer.setUserId(user.getId().toString());
         trainer.setSkills(skills);
-        String urlforLive = "live-streaming-service.azurewebsites.net/channel/create/" + user.getEmail();
-        String response = HttpClientUtil.getResponseAsString(urlforLive);
+        trainer.setGender(user.getGender());
+//        String urlforLive = "live-streaming-service.azurewebsites.net/channel/create/" + user.getEmail();
+//        String response = HttpClientUtil.getResponseAsString(urlforLive);
         try{
             trainerRepository.save(trainer);
         }

@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { connect } = require('getstream');
 const axios = require('axios');
-const pool = require('.././db'); 
+const pool = require('../db'); 
 const { promisify } = require('util');
 const StreamChat = require('stream-chat').StreamChat;
 require('dotenv').config();
