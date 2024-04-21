@@ -74,6 +74,20 @@ const subscribe = async(req, res, next) => {
     }
 }
 
+const getSubscribers = async(req, res, next) => {
+    try{
+        const user = await User.findById(req.user.id);
+        let subscribedTrainers = user.subscribedTrainers;
+        if(!subscribedTrainers){
+            subscribedTrainers = [];
+        }
+        res.status(200).json(subscribedTrainers);
+    } 
+    catch(err){
+        next(err);
+    }
+}
+
 const unsubscribe = async(req, res, next) => {
     try{
         await User.findByIdAndUpdate(req.user.id, {
@@ -92,4 +106,4 @@ const unsubscribe = async(req, res, next) => {
     }
 }
 
-module.exports = { addUser, deleteUser, getUser, subscribe, unsubscribe, update };
+module.exports = { addUser, deleteUser, getUser, subscribe, unsubscribe, update, getSubscribers };
