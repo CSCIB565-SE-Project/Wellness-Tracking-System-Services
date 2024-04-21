@@ -10,7 +10,7 @@ spring:
         show-sql: true
     data:
         mongodb:
-            uri: mongodb+srv://contentuser:Wellness123@wellnesstrackingcontent.851h7v8.mongodb.net/?retryWrites=true&w=majority&appName=wellnesstrackingcontentdb
+            uri: mongodb+srv://contentuser:Wellness123@wellnesstrackingcontent.851h7v8.mongodb.net/wellnesstrackingcontent?retryWrites=true&w=majority&appName=wellnesstrackingcontentdb
     mail:
         host: smtp.gmail.com
         port: 587
