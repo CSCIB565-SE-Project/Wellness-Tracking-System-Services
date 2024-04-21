@@ -21,6 +21,10 @@ public class AppointmentService implements IAppointmentService {
         return appointmentRepository.findById(appointmentId);
     }
 
+    public List<Appointment> getAppointmentsByUserId(String userId) {
+        return appointmentRepository.findByTrainerId(userId);
+    }    
+
     public List<Appointment> getAppointmentsByTrainerId(String trainerId) {
         return appointmentRepository.findByTrainerId(trainerId);
     }

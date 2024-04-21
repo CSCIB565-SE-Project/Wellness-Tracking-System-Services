@@ -8,8 +8,8 @@ public interface ITimetableService {
     Optional<Timetable> getTimetableById(Integer id);
     Timetable createTimetable(Timetable timetable);
     Timetable updateTimetable(Integer id, Timetable updatedTimetable);
-    List<Timetable> getTimetablesByUserId(Integer userId); // Changed parameter type to String
-    Timetable createTimetableForUser(Integer userId, Timetable timetable); // Changed parameter type to String
+    List<Timetable> getTimetablesByUserId(Integer userId); 
+    Timetable createTimetableForUser(Integer userId, Timetable timetable);
     boolean doesTimetableBelongToUser(Integer userId, Integer timetableId);
     void deleteTimetable(Integer id);
 }
