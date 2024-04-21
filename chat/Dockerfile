@@ -4,7 +4,6 @@ WORKDIR /usr/src/app
 COPY ./chat/package*.json ./
 RUN npm ci --omit=dev
 COPY ./chat/src ./src
-RUN wget --no-check-certificate -O ./src/DigiCertGlobalRootCA.crt.pem https://dl.cacerts.digicert.com/DigiCertGlobalRootCA.crt.pem
 
 ENV STREAM_APP_ID="1294184"
 ENV STREAM_API_KEY="v5zqy2qw283c"
