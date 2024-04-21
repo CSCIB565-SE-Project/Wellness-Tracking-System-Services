@@ -14,7 +14,7 @@ const UserSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        userLName: {
+        userLname: {
             type: String,
             required: true
         },
@@ -28,7 +28,8 @@ const UserSchema = new mongoose.Schema(
             type: String,
         },
         subscribedTrainers: {
-            type: [String]
+            type: [String],
+            default: []
         }
     }
 );
