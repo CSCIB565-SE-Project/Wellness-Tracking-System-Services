@@ -58,13 +58,13 @@ const getUser = async(req, res, next) => {
 
 const subscribe = async(req, res, next) => {
     try{
-        User.updateOne(
-            { userId: req.user.id }, 
+        await User.findOneAndUpdate({ userId: req.body.id }, 
             { $push: { subscribedTrainers:req.params.id } }
         );
-        Trainer.updateOne(
-            { userId: req.params.id }, 
-            { $push: { subscribedUsers:req.user.id } },
+        await Trainer.findOneAndUpdate({ userId: req.params.id }, 
+            { $push: { subscribedUsers:req.body.id } }
+        );
+        await Trainer.findOneAndUpdate({ userId: req.params.id }, 
             { $inc: { subscribers: 1 } }
         );
         res.status(200).json("Subscribed");
@@ -76,8 +76,7 @@ const subscribe = async(req, res, next) => {
 
 const getSubscribers = async(req, res, next) => {
     try{
-        const id = req.params.id;
-        const user = await User.findOne( { userId: id } );
+        const user = await User.findOne( { userId: req.params.id } );
         let subscribedTrainers = user.subscribedTrainers;
         if(!subscribedTrainers){
             subscribedTrainers = [];
