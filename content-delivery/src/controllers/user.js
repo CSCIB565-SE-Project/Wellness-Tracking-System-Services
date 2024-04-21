@@ -78,7 +78,7 @@ const subscribe = async(req, res, next) => {
 
 const getSubscribers = async(req, res, next) => {
     try{
-        const user = await User.findOne({userId: req.params.id});
+        const user = await User.find({userId: req.params.id});
         let subscribedTrainers = user.subscribedTrainers;
         if(!subscribedTrainers){
             subscribedTrainers = [];
