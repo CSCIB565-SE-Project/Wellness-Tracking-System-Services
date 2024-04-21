@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import jakarta.persistence.Id;
 
-@Document
+@Document(collection="progressmetrics")
 public class ProgressMetrics {
 
     @Id
