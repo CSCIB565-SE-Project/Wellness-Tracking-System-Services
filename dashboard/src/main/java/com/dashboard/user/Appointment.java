@@ -2,15 +2,13 @@ package com.dashboard.user;
 
 import java.util.Date;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import jakarta.persistence.Id;
 
-@Entity
+@Document
 public class Appointment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String trainerId;
     private Integer userId;

@@ -31,6 +31,4 @@ public class WorkoutPlan {
     public void setId(Long id) {
         this.id = id;
     }
-
-    // Getters and setters, constructors, toString, etc.
 }

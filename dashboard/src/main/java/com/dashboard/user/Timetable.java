@@ -1,8 +1,9 @@
 package com.dashboard.user;
 
-import java.sql.Time;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import jakarta.persistence.Id;
@@ -10,18 +11,21 @@ import jakarta.persistence.Id;
 @Document
 public class Timetable {
     @Id
-    private Integer id;
+    private ObjectId id;
 
-    
     private Integer userId;
     
     private String title;
-    private Date day;
+    private LocalDate day;
+
     private String workout;
     private String meals;
     private String sleepCycle;
-    private Time startTime;
-    private Time endTime;
+    private LocalTime startTime;
+    private LocalTime endTime;
+
+    // Getters and setters
+    // Note: You can generate these using your IDE to avoid errors.
 
     public String getTitle() {
         return title;
@@ -31,30 +35,30 @@ public class Timetable {
         this.title = title;
     }
 
-    public Date getDay() {
+    public LocalDate getDay() {
         return day;
     }
 
-    public void setDay(Date day) {
+    public void setDay(LocalDate day) {
         this.day = day;
     }
 
-    public Time getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Time startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public Time getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Time endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
-    
+
     public String getWorkout() {
         return workout;
     }

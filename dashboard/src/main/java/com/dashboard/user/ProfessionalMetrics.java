@@ -16,6 +16,5 @@ public class ProfessionalMetrics {
     private Long contentId;
     private int numberOfViews;
 
-    // Getters and setters
 }
 
