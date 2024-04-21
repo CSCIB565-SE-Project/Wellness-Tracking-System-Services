@@ -7,7 +7,7 @@ router.put("/:id", addUser);
 router.put("/update/:id", verifyToken, update);
 router.delete("/:id", verifyToken, deleteUser);
 router.get("/find/:id", getUser);
-router.get("/sub/:id", verifyToken, subscribe);
+router.put("/sub/:id", verifyToken, subscribe);
 router.get("/getsub/:id", verifyToken, getSubscribers);
 router.get("/unsub/:id", verifyToken, unsubscribe);
 

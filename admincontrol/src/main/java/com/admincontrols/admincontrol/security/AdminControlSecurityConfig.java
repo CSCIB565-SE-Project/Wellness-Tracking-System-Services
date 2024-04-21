@@ -31,7 +31,7 @@ public class AdminControlSecurityConfig {
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
             .cors(Customizer.withDefaults()).csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(requests -> requests
-                .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
+                .requestMatchers("/admin/**").permitAll()
             )
             .sessionManagement(session -> session
                 .sessionFixation().migrateSession() // Ensure session fixation protection
