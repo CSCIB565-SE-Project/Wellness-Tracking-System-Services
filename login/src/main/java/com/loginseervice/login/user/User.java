@@ -35,4 +35,6 @@ public class User {
     private String role;
     private boolean isEnabled = false;
     private boolean isOAuth = false;
+
+    
 }
