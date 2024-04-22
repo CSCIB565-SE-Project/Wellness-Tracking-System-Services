@@ -71,7 +71,7 @@ const deleteTrainer = async(req, res, next) => {
 
 const getTrainer = async(req, res, next) => {
     try{
-        const trainer = await Trainer.findById(req.params.id);
+        const trainer = await Trainer.find({ userId: req.params.id});
         res.status(200).json(trainer);
     }
     catch(err){
