@@ -33,9 +33,9 @@ public class DashboardSecurityConfig {
             .authorizeHttpRequests(requests -> requests
                 .requestMatchers(request -> {
                     String path = request.getServletPath();
-                    return path.startsWith("/admin/") && request.isUserInRole("ADMIN") ||
-                           path.startsWith("/professional/") && request.isUserInRole("PROFESSIONAL") ||
-                           path.startsWith("/user/") && request.isUserInRole("USER");
+                    return path.startsWith("/timetables/") ||
+                           path.startsWith("/progress-metrics/") ||
+                           path.startsWith("/appointments/");
                 }).permitAll() // Allow access based on request matchers
                 .anyRequest().authenticated() // All other requests require authentication
             )

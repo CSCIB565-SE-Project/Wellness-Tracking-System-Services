@@ -31,7 +31,7 @@ public class SearchSecurityConfig {
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
             .cors(Customizer.withDefaults()).csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(requests -> requests
-                .requestMatchers("/professional/**").hasAnyAuthority("PROFESSIONAL")
+                .requestMatchers(request -> request.getServletPath().startsWith("/professional/")).permitAll()
             )
             .sessionManagement(session -> session
                 .sessionFixation().migrateSession() // Ensure session fixation protection
