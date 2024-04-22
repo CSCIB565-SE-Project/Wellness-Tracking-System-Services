@@ -3,7 +3,6 @@ package com.dashboard.user;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import jakarta.persistence.Id;

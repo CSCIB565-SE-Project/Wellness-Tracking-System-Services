@@ -35,7 +35,8 @@ public class DashboardSecurityConfig {
                     String path = request.getServletPath();
                     return path.startsWith("/timetables/") ||
                            path.startsWith("/progress-metrics/") ||
-                           path.startsWith("/appointments/");
+                           path.startsWith("/appointments/") ||
+                           path.startsWith("/mealplan");
                 }).permitAll() // Allow access based on request matchers
                 .anyRequest().authenticated() // All other requests require authentication
             )

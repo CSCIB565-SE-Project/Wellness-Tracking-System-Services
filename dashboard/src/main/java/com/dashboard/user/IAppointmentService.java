@@ -3,8 +3,6 @@ package com.dashboard.user;
 import java.util.List;
 import java.util.Optional;
 
-import org.bson.types.ObjectId;
-
 public interface IAppointmentService {
     List<Appointment> getAllAppointments();
     Optional<Appointment> getAppointmentById(Integer id);
@@ -12,5 +10,5 @@ public interface IAppointmentService {
     List<Appointment> getAppointmentsByTrainerId(String trainerId);
     Appointment createAppointment(Appointment appointment);
     Appointment updateAppointment(Integer id, Appointment updatedAppointment);
-    void deleteAppointment(ObjectId id);
+    void deleteAppointment(String id);
 }
