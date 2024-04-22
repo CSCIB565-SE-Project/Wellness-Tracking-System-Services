@@ -13,7 +13,7 @@ public class Appointment {
     private String id;
     private String trainerId;
     private String title;
-    private LocalDate date;
+    private LocalDate day;
     private LocalTime startTime;
     private LocalTime endTime;
 
@@ -34,11 +34,11 @@ public class Appointment {
     }
 
     public LocalDate getDate() {
-        return date;
+        return day;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setDate(LocalDate day) {
+        this.day = day;
     }
     public LocalTime getStartTime() {
         return startTime;
