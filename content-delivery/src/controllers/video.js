@@ -49,7 +49,7 @@ const deleteVideo = async(req, res, next) => {
         if(!video){
             return next(createError(404, "Not Found"));
         }
-        if(req.user.id === video.trainerId){
+        if(req.body.userId === video.trainerId){
             const updatedWorkoutPlan = await WorkoutPlan.findByIdAndUpdate(req.query.workoutPlanId, {
                 $pull: {videoIds: video.id}
             },
@@ -79,7 +79,7 @@ const updateVideo = async(req, res, next) => {
         if(!video){
             return next(createError(404, "Not Found"));
         }
-        if(req.user.id === video.trainerId){
+        if(req.headers.id === video.trainerId){
             const updatedVideo = await Video.findByIdAndUpdate(req.params.id, {
                 $set: req.body
             },
@@ -157,8 +157,7 @@ const random = async(req, res, next) => {
 
 const trend = async(req, res, next) => {
     try{
-        const user = await User.findById(req.user.id)
-        const creator = req.trainer.id;
+        const creator = req.headers.id;
         const trainer = await Trainer.findById(creator);
         if(req.params.userId in trainer.subscribedUsers){
             const videos = Video.find({trainerId: trainer}).sort({views:-1});
@@ -175,7 +174,7 @@ const trend = async(req, res, next) => {
 
 const sub = async(req, res, next) => {
     try{
-        const user = await User.findById(req.user.id)
+        const user = await User.findById(req.headers.id)
         const trainers = user.subscribedTrainers;
         const list = await Promise.all(
             trainers.map((trainer) => {
@@ -192,12 +191,12 @@ const sub = async(req, res, next) => {
 const getByTag = async (req, res, next) => {
     const tags = req.query.tags.split(",");
     try {
-        const user = await User.findById(req.user.id)
+        const user = await User.findById(req.headers.id);
         const trainers = user.subscribedTrainers;
         const promises = trainers.map(trainer => {
             return Video.find({ tags: { $in: tags }, trainerId: trainer });
         });
-        const videosArray = await Promise.all(promises);
+        const videosArray = await Promise.all(promises);;
         const videos = videosArray.flat().slice(0, 20);
         res.status(200).json(videos);
     } catch (err) {
@@ -227,7 +226,7 @@ const search = async(req, res, next) => {
 
 const parameterizedSearch = async (req, res, next) => {
     const { q, modeOfInstruction, typeOfWorkout } = req.query;
-    const userId = req.user.id;
+    const userId = req.headers.id;
     const queryConditions = [];
     
     if (q) {
@@ -289,7 +288,7 @@ const like = async(req, res, next) => {
 }
 
 const dislike = async(req, res, next) => {
-    const id = req.user.id;
+    const id = req.headers.id;
     const videoId = req.params.videoId;
     try{
         await Video.findByIdAndUpdate(videoId, {

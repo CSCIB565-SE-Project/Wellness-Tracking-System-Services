@@ -8,7 +8,7 @@ const router = express.Router();
 router.use(cors());
 router.post("/add/:id", verifyToken, addVideo);
 router.put("/:id", verifyToken, updateVideo);
-router.delete("delete/:id", verifyToken, deleteVideo);
+router.delete("/delete/:id", verifyToken, deleteVideo);
 router.get("/find/:id", verifyToken, getVideo);
 router.get("/play", streamVideo);
 router.put("/view/:id", verifyToken, addView);
