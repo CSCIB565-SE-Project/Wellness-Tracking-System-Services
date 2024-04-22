@@ -14,7 +14,7 @@ public record RegistrationRequest(
     String password,
     String role,
     List<String> skills,
-    String speciality,
+    String specialty,
     String location,
     Boolean isOAuth) {
 
@@ -28,7 +28,7 @@ public record RegistrationRequest(
                                String password,
                                String role,
                                List<String> skills,
-                               String speciality,
+                               String specialty,
                                String location,
                                Boolean isOAuth) {
         this.fname = fname;
@@ -41,24 +41,24 @@ public record RegistrationRequest(
         this.password = password;
         this.role = role;
         this.skills = skills;
-        this.speciality = speciality;
+        this.specialty = specialty;
         this.location = location;
         this.isOAuth = isOAuth;
     }
 
     public RegistrationRequest setEmail(String email) {
-        return new RegistrationRequest(fname, mname, lname, dob, gender, username, email, password, role, skills, speciality, location, isOAuth);
+        return new RegistrationRequest(fname, mname, lname, dob, gender, username, email, password, role, skills, specialty, location, isOAuth);
     }
 
     // Method to set name
     public RegistrationRequest setName(String name) {
         String[] parts = name.split("\\s+");
         if (parts.length == 3) {
-            return new RegistrationRequest(parts[0], parts[1], parts[2], dob, gender, username, email, password, role, skills, speciality, location, isOAuth);
+            return new RegistrationRequest(parts[0], parts[1], parts[2], dob, gender, username, email, password, role, skills, specialty, location, isOAuth);
         } else if (parts.length == 2) {
-            return new RegistrationRequest(parts[0], "", parts[1], dob, gender, username, email, password, role, skills, speciality, location, isOAuth);
+            return new RegistrationRequest(parts[0], "", parts[1], dob, gender, username, email, password, role, skills, specialty, location, isOAuth);
         } else {
-            return new RegistrationRequest(name, "", "", dob, gender, username, email, password, role, skills, speciality, location, isOAuth);
+            return new RegistrationRequest(name, "", "", dob, gender, username, email, password, role, skills, specialty, location, isOAuth);
         }
     }
 }

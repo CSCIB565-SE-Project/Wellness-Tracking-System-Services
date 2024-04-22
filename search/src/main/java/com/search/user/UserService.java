@@ -13,9 +13,9 @@ public class UserService {
 
     public List<Trainer> searchProfessionals(
             String userId,
-            String speciality,
+            String specialty,
             String gender,
             String location) {
-        return trainerRepository.findByUserIdContainingIgnoreCaseOrSpecialityContainingIgnoreCaseOrGenderContainingIgnoreCaseOrLocationContainingIgnoreCase(userId, speciality, gender, location);
+        return trainerRepository.findByUserIdContainingIgnoreCaseOrSpecialtyContainingIgnoreCaseOrGenderContainingIgnoreCaseOrLocationContainingIgnoreCase(userId, specialty, gender, location);
     }   
 }
