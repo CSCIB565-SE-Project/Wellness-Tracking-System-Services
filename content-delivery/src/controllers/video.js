@@ -49,7 +49,7 @@ const deleteVideo = async(req, res, next) => {
         if(!video){
             return next(createError(404, "Not Found"));
         }
-        if(req.headers.id === video.trainerId){
+        if(req.body.userId === video.trainerId){
             const updatedWorkoutPlan = await WorkoutPlan.findByIdAndUpdate(req.query.workoutPlanId, {
                 $pull: {videoIds: video.id}
             },
