@@ -39,7 +39,7 @@ public class AppointmentService implements IAppointmentService {
         if (appointmentOptional.isPresent()) {
             Appointment appointment = appointmentOptional.get();
 
-            appointment.setDate(updatedAppointment.getDate());
+            // appointment.setDate(updatedAppointment.getDate());
             appointment.setTrainerId(updatedAppointment.getTrainerId());
 
             return appointmentRepository.save(appointment);
