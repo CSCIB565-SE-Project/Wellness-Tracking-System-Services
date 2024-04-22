@@ -41,7 +41,6 @@ public class AppointmentService implements IAppointmentService {
 
             appointment.setDate(updatedAppointment.getDate());
             appointment.setTrainerId(updatedAppointment.getTrainerId());
-            appointment.setUserId(updatedAppointment.getUserId());
 
             return appointmentRepository.save(appointment);
         } else {

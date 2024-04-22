@@ -3,7 +3,6 @@ package com.dashboard.user;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import jakarta.persistence.Id;
@@ -11,9 +10,9 @@ import jakarta.persistence.Id;
 @Document
 public class Appointment {
     @Id
-    private ObjectId id;
+    private String id;
     private String trainerId;
-    private Integer userId;
+    private String title;
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
@@ -26,12 +25,12 @@ public class Appointment {
         this.trainerId = trainerId;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getTitle() {
+        return title;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public LocalDate getDate() {
@@ -56,4 +55,13 @@ public class Appointment {
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
 }

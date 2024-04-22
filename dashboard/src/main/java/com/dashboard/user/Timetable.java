@@ -11,7 +11,7 @@ import jakarta.persistence.Id;
 @Document
 public class Timetable {
     @Id
-    private ObjectId id;
+    private String id;
 
     private Integer userId;
     
@@ -90,4 +90,14 @@ public class Timetable {
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    
 }

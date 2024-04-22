@@ -3,7 +3,6 @@ package com.dashboard.dashboard;
 import java.util.List;
 import java.util.Optional;
 
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -64,7 +63,7 @@ public class TimetableController {
     }
     
     @DeleteMapping("/delete")
-    public ResponseEntity<Void> deleteTimetable(@RequestParam Integer userId, @RequestParam ObjectId timetableId) {
+    public ResponseEntity<Void> deleteTimetable(@RequestParam String timetableId) {
         timetableService.deleteTimetable(timetableId);
         return ResponseEntity.noContent().build();
     }

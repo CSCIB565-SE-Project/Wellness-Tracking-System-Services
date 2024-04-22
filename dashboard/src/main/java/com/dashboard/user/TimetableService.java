@@ -57,7 +57,7 @@ public class TimetableService implements ITimetableService {
         return timetableOptional.map((Timetable timetable) -> timetable.getUserId().equals(userId)).orElse(false);
     }     
 
-    public void deleteTimetable(ObjectId id) {
+    public void deleteTimetable(String id) {
         timetableRepository.deleteById(id);
     }
 }
