@@ -135,6 +135,11 @@ public class UserService implements IUserService, ITrainerService {
     }
 
     @Override
+    public Optional<User> findById(Integer userId){
+        return userRepository.findById(userId);
+    }
+
+    @Override
     public String getPasswordEmail(Optional<User> user) {
         User usr = user.get();
         String password = usr.getPassword();
