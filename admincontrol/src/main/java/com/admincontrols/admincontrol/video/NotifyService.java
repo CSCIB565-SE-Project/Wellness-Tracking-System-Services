@@ -18,7 +18,7 @@ public class NotifyService implements INotifyService{
     }
 
     @Override
-    public Optional<Video> getVideoById(Integer id){
+    public Optional<Video> getVideoById(String id){
         Optional<Video> video = videoRepository.findById(id);
         return video;
     }

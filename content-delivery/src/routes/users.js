@@ -2,7 +2,9 @@ const { update, getUser, subscribe, unsubscribe, addUser, deleteUser, getSubscri
 const { verifyToken } = require('../verifyToken.js');
 const express = require('express');
 const router = express.Router();
+const cors = require('cors');
 
+router.use(cors());
 router.put("/:id", addUser);
 router.put("/update/:id", verifyToken, update);
 router.delete("/:id", verifyToken, deleteUser);

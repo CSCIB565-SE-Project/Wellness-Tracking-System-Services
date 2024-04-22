@@ -4,7 +4,7 @@ import java.util.Optional;
 
 public interface INotifyService {
     List<Video> getUnApprovedVideos();
-    Optional<Video> getVideoById(Integer id);
+    Optional<Video> getVideoById(String id);
     boolean saveApprovedRequest(Video video);
     boolean rejectRequest(String id);
 }

@@ -17,12 +17,14 @@ public class Video {
     @Id
     private String id;
     private String trainerId;
+    private String workOutPlanId;
     private String title;
     private String description;
     private String imgUrl;
     private String videoUrl;
     private String modeOfInstruction;
     private String typeOfWorkout;
+    private String caloriesBurnt;
     private int views;
     private List<String> tags;
     private List<String> likes;
