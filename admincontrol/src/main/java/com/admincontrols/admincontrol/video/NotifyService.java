@@ -27,6 +27,7 @@ public class NotifyService implements INotifyService{
     public boolean saveApprovedRequest(Video video){
         try{
             video.setApproved(true);
+            videoRepository.save(video);
             return true;
         }
         catch(Exception exception){
