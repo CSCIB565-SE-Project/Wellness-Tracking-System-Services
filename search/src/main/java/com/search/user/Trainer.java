@@ -25,5 +25,6 @@ public class Trainer {
     private String gender;
     private int subscribers;
     private List<String> subscribedUsers;
+    private List<String> skills;
 }
 
