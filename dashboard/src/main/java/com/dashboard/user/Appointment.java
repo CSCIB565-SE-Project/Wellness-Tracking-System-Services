@@ -33,13 +33,13 @@ public class Appointment {
         this.title = title;
     }
 
-    public LocalDate getDate() {
-        return day;
-    }
+    // public LocalDate get() {
+    //     return day;
+    // }
 
-    public void setDate(LocalDate day) {
-        this.day = day;
-    }
+    // public void setDate(LocalDate day) {
+    //     this.day = day;
+    
     public LocalTime getStartTime() {
         return startTime;
     }
@@ -62,6 +62,14 @@ public class Appointment {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public LocalDate getDay() {
+        return day;
+    }
+
+    public void setDay(LocalDate day) {
+        this.day = day;
     }
 
 }
