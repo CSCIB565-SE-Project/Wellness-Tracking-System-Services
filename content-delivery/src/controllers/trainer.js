@@ -16,7 +16,11 @@ const addTrainer = async (req, res, next) => {
 const getSubscribers = async(req, res, next) => {
     try{
         const trainer = await Trainer.find({userId: req.params.id});
-        let subscribers = trainer.subscribedUsers;
+        console.log(trainer);
+        let subscribers = [];
+        if (trainer.length > 0) {
+            subscribers = trainer[0].subscribedUsers;
+        }
         if(!subscribers){
             subscribers = [];
         }
