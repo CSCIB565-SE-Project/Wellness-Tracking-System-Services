@@ -67,7 +67,7 @@ public class AppointmentController {
     }
 
     @DeleteMapping("/deleteForTrainer")
-    public ResponseEntity<Void> deleteAppointmentForTrainer(@RequestParam ObjectId appointmentId, @RequestParam String trainerId) {
+    public ResponseEntity<Void> deleteAppointmentForTrainer(@RequestParam ObjectId appointmentId) {
         appointmentService.deleteAppointment(appointmentId);
         return ResponseEntity.noContent().build();
     }
