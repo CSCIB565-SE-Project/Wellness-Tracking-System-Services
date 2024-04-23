@@ -7,6 +7,7 @@ const videoRoutes = require("./routes/videos.js");
 const commentRoutes = require("./routes/comments.js");
 const workoutplanRoutes = require("./routes/workoutplans.js")
 //const cookieParser = require("cookie-parser");
+const port = process.env.port || 8080;
 
 const app = express();
 
@@ -44,7 +45,7 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + "/index.html");
 });
 
-app.listen(8000, function () {
+app.listen(port, function () {
   connect();
-  console.log("Listening on port 8000!");
+  console.log("Listening on port!");
 });
