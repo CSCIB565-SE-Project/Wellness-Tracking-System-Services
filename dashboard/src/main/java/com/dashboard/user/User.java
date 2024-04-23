@@ -34,8 +34,6 @@ public class User {
     private String password;
     private String role;
     private boolean isEnabled = false;
-    private String specialty;
-    private String location;
 
     public Integer getId()
     {

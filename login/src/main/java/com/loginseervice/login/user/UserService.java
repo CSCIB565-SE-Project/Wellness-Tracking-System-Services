@@ -46,12 +46,12 @@ public class UserService implements IUserService, ITrainerService {
     }
 
     @Override
-    public void registerTrainer(User user, List<String> skills, String speciality, String location){
+    public void registerTrainer(User user, List<String> skills, String specialty, String location){
         Trainer trainer = new Trainer();
         trainer.setUserId(user.getId().toString());
         trainer.setSkills(skills);
         trainer.setGender(user.getGender());
-        trainer.setSpeciality(speciality);
+        trainer.setSpecialty(specialty);
         trainer.setLocation(location);
         trainer.setFirstName(user.getFname());
         trainer.setUsername(user.getUsername());
@@ -116,7 +116,10 @@ public class UserService implements IUserService, ITrainerService {
         User usr = userRepository.save(newUser);
         if(request.role().equals("PROFESSIONAL")){
             try{
-                registerTrainer(usr, request.skills(), request.speciality(), request.location());
+                System.out.println("Skills: " + request.skills());
+                System.out.println("Location: " + request.location());
+                System.out.println("Specialty: " + request.specialty());
+                registerTrainer(usr, request.skills(), request.specialty(), request.location());
             }
             catch(Exception exception){
                 throw exception;
