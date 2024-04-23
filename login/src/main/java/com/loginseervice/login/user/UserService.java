@@ -119,7 +119,6 @@ public class UserService implements IUserService, ITrainerService {
                 System.out.println("Skills: " + request.skills());
                 System.out.println("Location: " + request.location());
                 System.out.println("Specialty: " + request.specialty());
-
                 registerTrainer(usr, request.skills(), request.specialty(), request.location());
             }
             catch(Exception exception){

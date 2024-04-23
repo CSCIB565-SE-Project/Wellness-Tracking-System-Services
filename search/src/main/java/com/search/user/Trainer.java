@@ -19,6 +19,8 @@ public class Trainer {
     @Id
     private String id;
     private String userId;
+    private String firstName;
+    private String username;
     private String img;
     private String specialty;
     private String location;
