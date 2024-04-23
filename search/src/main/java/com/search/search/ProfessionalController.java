@@ -21,13 +21,7 @@ public class ProfessionalController {
     private UserService userService;
 
     @GetMapping("/search")
-    public List<Trainer> searchProfessionals(
-            @RequestParam(required = false) String userId,
-            @RequestParam(required = false) String firstName,
-            @RequestParam(required = false) String username,
-            @RequestParam(required = false) String specialty,
-            @RequestParam(required = false) String gender,
-            @RequestParam(required = false) String location) {
-        return userService.searchProfessionals(userId, firstName, username, specialty, gender, location);
+    public List<Trainer> searchProfessionals(@RequestParam String specialty) { 
+        return userService.searchProfessionals(specialty);
     }
 }

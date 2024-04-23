@@ -11,9 +11,8 @@ public class UserService {
     @Autowired
     private TrainerRepository trainerRepository;
 
-
-    public List<Trainer> searchProfessionals(String userId, String firstName, String username, String specialty,
-            String gender, String location) {
-                    return trainerRepository.findByUserIdContainingIgnoreCaseOrFirstNameContainingIgnoreCaseOrUsernameContainingIgnoreCaseOrSpecialtyContainingIgnoreCaseOrGenderContainingIgnoreCaseOrLocationContainingIgnoreCase(userId, firstName, username, specialty, gender, location);
-    }   
+    public List<Trainer> searchProfessionals(String specialty) {
+        return trainerRepository.findBySpecialtyContainingIgnoreCase(specialty);
+    }
 }
+

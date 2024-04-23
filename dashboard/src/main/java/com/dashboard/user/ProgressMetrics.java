@@ -6,7 +6,15 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Document(collection="progressmetrics")
 public class ProgressMetrics {
 
@@ -19,9 +27,5 @@ public class ProgressMetrics {
     private Date date;
     private int caloriesBurnt;
     private int targetCalories;
-    
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
 
 }
