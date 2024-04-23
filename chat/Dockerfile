@@ -1,9 +1,9 @@
 FROM node:20.11.0-alpine
 
 WORKDIR /usr/src/app
-COPY ./chat/package*.json ./
+COPY ./package*.json ./
 RUN npm ci --omit=dev
-COPY ./chat/src ./src
+COPY ./src ./src
 
 ENV STREAM_APP_ID="1294184"
 ENV STREAM_API_KEY="v5zqy2qw283c"

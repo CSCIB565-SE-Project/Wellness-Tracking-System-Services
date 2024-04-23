@@ -90,13 +90,13 @@ const getSubscribers = async(req, res, next) => {
 
 const unsubscribe = async(req, res, next) => {
     try{
-        await User.findByIdAndUpdate(req.user.id, {
+        await User.findOneAndUpdate({ userId: req.body.id }, {
             $pull: { subscribedTrainers: req.params.id }
         });
-        await Trainer.findByIdAndUpdate(req.params.id, {
+        await Trainer.findOneAndUpdate({ userId: req.params.id }, {
             $pull: { subscribedUsers: req.user.id }
         });
-        await Trainer.findByIdAndUpdate(req.params.id, {
+        await Trainer.findOneAndUpdate({ userId: req.params.id }, {
             $inc: { subscribers: -1 }
         });
         res.status(200).json("Unsubscribed");

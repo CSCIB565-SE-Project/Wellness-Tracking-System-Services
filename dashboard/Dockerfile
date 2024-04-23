@@ -1,7 +1,7 @@
 FROM maven:3.9.6 AS builder
 WORKDIR /build
-COPY ./dashboard/pom.xml .
-COPY ./dashboard/src ./src
+COPY ./pom.xml .
+COPY ./src ./src
 RUN mvn clean package
 
 FROM eclipse-temurin:17

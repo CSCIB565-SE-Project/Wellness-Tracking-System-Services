@@ -18,4 +18,4 @@ app.get('/', (req, res) => {
 
 app.use('/auth', authRoutes);
 
-app.listen(8000, () => console.log(`Server running on port 8000`));
+app.listen(8000, () => console.log('Server running on port 8000'));
